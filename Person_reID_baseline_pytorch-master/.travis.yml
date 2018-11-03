@@ -1,0 +1,16 @@
+# https://travis-ci.org/pytorch/pytorch
+sudo: required
+
+language: python
+
+services:
+  - docker
+
+before_install:
+- docker pull pytorch/pytorch
+- docker run -d -p 127.0.0.1:80:4567 pytorch/pytorch /bin/sh -c "cd /root/pytorch; bundle exec foreman start;"
+- docker ps -a
+- docker run pytorch/pytorch /bin/sh -c "cd /root/pytorch; bundle exec rake test"
+
+script:
+  - python model.py
