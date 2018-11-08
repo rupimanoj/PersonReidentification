@@ -74,6 +74,44 @@ class ft_net(nn.Module):
         x = torch.squeeze(x)
         x = self.classifier(x)
         return x
+    
+class ft_attr_net(nn.Module):
+
+    def __init__(self, class_num ):
+        super(ft_attr_net, self).__init__()
+        model_ft = models.resnet50(pretrained=True)
+        # avg pooling to global pooling
+        model_ft.avgpool = nn.AdaptiveAvgPool2d((1,1))
+        self.model = model_ft
+        self.classifier = ClassBlock(2048, class_num)
+        self.classifier1 = ClassBlock(2048, 4)
+        self.classifier2 = ClassBlock(2048, 2)
+        self.classifier3 = ClassBlock(2048, 9)
+        self.classifier4 = ClassBlock(2048, 8)
+
+    def forward(self, x):
+        x = self.model.conv1(x)
+        x = self.model.bn1(x)
+        x = self.model.relu(x)
+        x = self.model.maxpool(x)
+        x = self.model.layer1(x)
+        x = self.model.layer2(x)
+        x = self.model.layer3(x)
+        x = self.model.layer4(x)
+        x = self.model.avgpool(x)
+        x = torch.squeeze(x)
+        y = []
+        y.append(self.classifier(x))
+        y.append(self.classifier1(x))
+        for i in range(11):
+            if(i==3):
+                y.append(self.classifier3(x))
+            elif(i==4):
+                y.append(self.classifier4(x))
+            else:
+                y.append(self.classifier2(x))
+        
+        return y
 
 # Define the DenseNet121-based Model
 class ft_net_dense(nn.Module):
