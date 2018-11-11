@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 from PIL import Image
 import time
 import os
-from model import ft_net, ft_net_dense, PCB, ft_attr_net
+from model import ft_net, ft_net_dense, PCB, ft_attr_net, ft_attr_net_dense
 from random_erasing import RandomErasing
 import json
 from shutil import copyfile
@@ -172,6 +172,7 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
             running_loss = 0.0
             running_corrects = 0.0
             running_attr_loss = 0.0
+            running_attr_corrects = np.zeros((12))
             # Iterate over data.
             
             for data in dataloaders[phase]:
@@ -216,7 +217,7 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
                     for i in range(1,12):
                         attr_loss = attr_loss + criterion(outputs[i+1], batch_attr_data[:,i])
                   
-                    total_loss = identity_loss + attr_loss
+                    total_loss = 0.9897*identity_loss + 0.0103*attr_loss
                 
                 else:
                     part = {}
@@ -245,9 +246,9 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
                     running_loss += total_loss.data[0] * now_batch_size
                # print(identity_loss, attr_loss)
                 running_corrects += float(torch.sum(preds == labels.data))
-                attr_running_corrects = np.zeros((12))
+                
                 for i in range(12):
-                    attr_running_corrects[i] += float(torch.sum(attr_preds[i] == batch_attr_data[:,i].data))
+                    running_attr_corrects[i] += float(torch.sum(attr_preds[i] == batch_attr_data[:,i].data))
                 
              #   print(  8*identity_loss.item()* now_batch_size, 0.083*attr_loss.item()* now_batch_size, total_loss.item() * now_batch_size)
 
@@ -256,7 +257,7 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
             epoch_acc = running_corrects / dataset_sizes[phase]
             attr_epoch_acc = np.zeros((12))
             for i in range(12):
-                attr_epoch_acc[i] = attr_running_corrects[i] / dataset_sizes[phase]
+                attr_epoch_acc[i] = running_attr_corrects[i] / dataset_sizes[phase]
                 
             print('{} Loss: {:.4f} Attr Loss: {:.4f} Acc: {:.4f}'.format(
                 phase, epoch_loss, epoch_attr_loss, epoch_acc))
@@ -323,7 +324,7 @@ def save_network(network, epoch_label):
 #
 
 if opt.use_dense:
-    model = ft_net_dense(len(class_names))
+    model = ft_attr_net_dense(len(class_names))
 elif use_attr:
     model = ft_attr_net(len(class_names))
 else:
@@ -337,7 +338,7 @@ print(model)
 if use_gpu:
     model = model.cuda()
 
-criterion = nn.CrossEntropyLoss()
+criterion = nn.CrossEntropyLoss().cuda()
 
 if use_attr:
     ignored_params = list(map(id, model.model.fc.parameters() )) + list(map(id, model.classifier.parameters() ))                                                                 + list(map(id, model.classifier1.parameters() ))                                                                 + list(map(id, model.classifier2.parameters() ))  + list(map(id, model.classifier3.parameters() ))  + list(map(id, model.classifier4.parameters() ))
