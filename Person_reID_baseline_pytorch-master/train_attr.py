@@ -31,7 +31,7 @@ print(os.system('ls'))
 parser = argparse.ArgumentParser(description='Training')
 parser.add_argument('--gpu_ids',default='0', type=str,help='gpu_ids: e.g. 0  0,1,2  0,2')
 parser.add_argument('--name',default='ft_ResNet50', type=str, help='output model name')
-parser.add_argument('--data_dir',default='../data/Market/pytorch',type=str, help='training dir path')
+parser.add_argument('--data_dir',default='../../data/Market/pytorch',type=str, help='training dir path')
 parser.add_argument('--train_all', action='store_true', help='use all training data' )
 parser.add_argument('--color_jitter', action='store_true', help='use color jitter in training' )
 parser.add_argument('--batchsize', default=32, type=int, help='batchsize')
@@ -218,6 +218,7 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
                         attr_loss = attr_loss + criterion(outputs[i+1], batch_attr_data[:,i])
                   
                     total_loss = 0.9897*identity_loss + 0.0103*attr_loss
+                    #total_loss = 0.9*identity_loss + 0.1*attr_loss
                 
                 else:
                     part = {}
@@ -323,7 +324,7 @@ def save_network(network, epoch_label):
 # Load a pretrainied model and reset final fully connected layer.
 #
 
-if opt.use_dense:
+if opt.use_dense and use_attr:
     model = ft_attr_net_dense(len(class_names))
 elif use_attr:
     model = ft_attr_net(len(class_names))
@@ -341,16 +342,25 @@ if use_gpu:
 criterion = nn.CrossEntropyLoss().cuda()
 
 if use_attr:
-    ignored_params = list(map(id, model.model.fc.parameters() )) + list(map(id, model.classifier.parameters() ))                                                                 + list(map(id, model.classifier1.parameters() ))                                                                 + list(map(id, model.classifier2.parameters() ))  + list(map(id, model.classifier3.parameters() ))  + list(map(id, model.classifier4.parameters() ))
+    ignored_params = list(map(id, model.model.fc.parameters())) + list(map(id, model.classifier.parameters() )) +list(map(id, model.classifierage.parameters())) +list(map(id, model.classifierbackpack.parameters())) +list(map(id, model.classifierbag.parameters())) +list(map(id, model.classifierhandbag.parameters())) +list(map(id, model.classifierdowncolor.parameters())) +list(map(id, model.classifierupcolor.parameters())) +list(map(id, model.classifierclothes.parameters())) +list(map(id, model.classifierdown.parameters())) +list(map(id, model.classifierup.parameters())) +list(map(id, model.classifierhair.parameters())) +list(map(id, model.classifierhat.parameters())) +list(map(id, model.classifiergender.parameters()))
+    
     base_params = filter(lambda p: id(p) not in ignored_params, model.parameters())
     optimizer_ft = optim.SGD([
              {'params': base_params, 'lr': 0.01},
              {'params': model.model.fc.parameters(), 'lr': 0.1},
              {'params': model.classifier.parameters(), 'lr': 0.1},
-             {'params': model.classifier1.parameters(), 'lr': 0.1},
-             {'params': model.classifier2.parameters(), 'lr': 0.1},
-             {'params': model.classifier3.parameters(), 'lr': 0.1},
-             {'params': model.classifier4.parameters(), 'lr': 0.1}
+             {'params': model.classifierage.parameters(), 'lr': 0.1},
+             {'params': model.classifierbackpack.parameters(), 'lr': 0.1},
+             {'params': model.classifierbag.parameters(), 'lr': 0.1},
+             {'params': model.classifierhandbag.parameters(), 'lr': 0.1},
+             {'params': model.classifierdowncolor.parameters(), 'lr': 0.1},
+             {'params': model.classifierupcolor.parameters(), 'lr': 0.1},
+             {'params': model.classifierclothes.parameters(), 'lr': 0.1},
+             {'params': model.classifierdown.parameters(), 'lr': 0.1},
+             {'params': model.classifierup.parameters(), 'lr': 0.1},
+             {'params': model.classifierhair.parameters(), 'lr': 0.1},
+             {'params': model.classifierhat.parameters(), 'lr': 0.1},
+             {'params': model.classifiergender.parameters(), 'lr': 0.1},
          ], weight_decay=5e-4, momentum=0.9, nesterov=True)
     
 elif not opt.PCB:
@@ -407,5 +417,5 @@ with open('%s/opts.json'%dir_name,'w') as fp:
     json.dump(vars(opt), fp, indent=1)
 
 model = train_model(model, criterion, optimizer_ft, exp_lr_scheduler,
-                       num_epochs=60)
+                       num_epochs=70)
 
