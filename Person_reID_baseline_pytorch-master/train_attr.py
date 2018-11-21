@@ -103,6 +103,7 @@ data_transforms = {
 }
 
 
+
 train_all = ''
 if opt.train_all:
      train_all = '_all'
@@ -123,14 +124,37 @@ class_names = image_datasets['train'].classes
 
 use_gpu = torch.cuda.is_available()
 
+if opt.use_dense and use_attr:
+    model = ft_attr_net_dense(len(class_names))
+elif use_attr:
+    model = ft_attr_net(len(class_names))
+else:
+    model = ft_net(len(class_names))
+
+if opt.PCB:
+    model = PCB(len(class_names))
+
+print(model)
+
+if use_gpu:
+    model = model.cuda()
+    
 since = time.time()
 inputs, classes = next(iter(dataloaders['train']))
 print(time.time()-since)
 
+b = np.load('labels.npy')
+list_indices = []
+for index,label in enumerate(b):
+    if(label in model.labels):
+        list_indices.append(index)
+        
 a = np.load('attribute_data.npy')
+a = a[:,list_indices]
 attr_data = torch.from_numpy(a)
 print('attr_data.shape')
 print(attr_data.shape)
+
 ######################################################################
 # Training the model
 # ------------------
@@ -156,7 +180,19 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
 
     best_model_wts = model.state_dict()
     best_acc = 0.0
-    
+
+    #dummy call to get the number of attributes in the model
+    for data in dataloaders['train']:      
+        inputs, labels = data              
+        if use_gpu:
+            inputs = Variable(inputs.cuda())
+        else:
+            inputs = Variable(inputs)
+        outputs = model(inputs)
+        model_output_size = len(outputs) - 2
+        break
+    print('No. of Attributes selected')
+    print(model_output_size)
     for epoch in range(num_epochs):
         print('Epoch {}/{}'.format(epoch, num_epochs - 1))
         print('-' * 10)
@@ -172,7 +208,7 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
             running_loss = 0.0
             running_corrects = 0.0
             running_attr_loss = 0.0
-            running_attr_corrects = np.zeros((12))
+            running_attr_corrects = np.zeros((model_output_size))
             # Iterate over data.
             
             for data in dataloaders[phase]:
@@ -207,14 +243,14 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
                 if not opt.PCB:
                     _, preds = torch.max(outputs[0].data, 1)
                     attr_preds = []
-                    for i in range(12):
+                    for i in range(model_output_size):
                         _, temp_preds = torch.max(outputs[i+1].data, 1)
                         attr_preds.append(temp_preds)
                         
                     identity_loss = criterion(outputs[0], labels)
                     attr_loss =  criterion(outputs[1], batch_attr_data[:,0])
                   
-                    for i in range(1,12):
+                    for i in range(1,model_output_size):
                         attr_loss = attr_loss + criterion(outputs[i+1], batch_attr_data[:,i])
                   
                     total_loss = 0.9897*identity_loss + 0.0103*attr_loss
@@ -248,7 +284,7 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
                # print(identity_loss, attr_loss)
                 running_corrects += float(torch.sum(preds == labels.data))
                 
-                for i in range(12):
+                for i in range(model_output_size):
                     running_attr_corrects[i] += float(torch.sum(attr_preds[i] == batch_attr_data[:,i].data))
                 
              #   print(  8*identity_loss.item()* now_batch_size, 0.083*attr_loss.item()* now_batch_size, total_loss.item() * now_batch_size)
@@ -256,8 +292,8 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
             epoch_loss = running_loss / dataset_sizes[phase]
             epoch_attr_loss = running_attr_loss / dataset_sizes[phase]
             epoch_acc = running_corrects / dataset_sizes[phase]
-            attr_epoch_acc = np.zeros((12))
-            for i in range(12):
+            attr_epoch_acc = np.zeros((model_output_size))
+            for i in range(model_output_size):
                 attr_epoch_acc[i] = running_attr_corrects[i] / dataset_sizes[phase]
                 
             print('{} Loss: {:.4f} Attr Loss: {:.4f} Acc: {:.4f}'.format(
@@ -324,44 +360,27 @@ def save_network(network, epoch_label):
 # Load a pretrainied model and reset final fully connected layer.
 #
 
-if opt.use_dense and use_attr:
-    model = ft_attr_net_dense(len(class_names))
-elif use_attr:
-    model = ft_attr_net(len(class_names))
-else:
-    model = ft_net(len(class_names))
 
-if opt.PCB:
-    model = PCB(len(class_names))
-
-print(model)
-
-if use_gpu:
-    model = model.cuda()
 
 criterion = nn.CrossEntropyLoss().cuda()
 
 if use_attr:
-    ignored_params = list(map(id, model.model.fc.parameters())) + list(map(id, model.classifier.parameters() )) +list(map(id, model.classifierage.parameters())) +list(map(id, model.classifierbackpack.parameters())) +list(map(id, model.classifierbag.parameters())) +list(map(id, model.classifierhandbag.parameters())) +list(map(id, model.classifierdowncolor.parameters())) +list(map(id, model.classifierupcolor.parameters())) +list(map(id, model.classifierclothes.parameters())) +list(map(id, model.classifierdown.parameters())) +list(map(id, model.classifierup.parameters())) +list(map(id, model.classifierhair.parameters())) +list(map(id, model.classifierhat.parameters())) +list(map(id, model.classifiergender.parameters()))
+    
+    ignored_params = list(map(id, model.model.fc.parameters())) + list(map(id, model.classifier.parameters() )) 
+    for attr in model.labels:
+        name = 'classifier'+str(attr)
+        ignored_params = ignored_params + list(map(id, getattr(model,name).parameters()))
     
     base_params = filter(lambda p: id(p) not in ignored_params, model.parameters())
-    optimizer_ft = optim.SGD([
+    list_optim = [
              {'params': base_params, 'lr': 0.01},
              {'params': model.model.fc.parameters(), 'lr': 0.1},
-             {'params': model.classifier.parameters(), 'lr': 0.1},
-             {'params': model.classifierage.parameters(), 'lr': 0.1},
-             {'params': model.classifierbackpack.parameters(), 'lr': 0.1},
-             {'params': model.classifierbag.parameters(), 'lr': 0.1},
-             {'params': model.classifierhandbag.parameters(), 'lr': 0.1},
-             {'params': model.classifierdowncolor.parameters(), 'lr': 0.1},
-             {'params': model.classifierupcolor.parameters(), 'lr': 0.1},
-             {'params': model.classifierclothes.parameters(), 'lr': 0.1},
-             {'params': model.classifierdown.parameters(), 'lr': 0.1},
-             {'params': model.classifierup.parameters(), 'lr': 0.1},
-             {'params': model.classifierhair.parameters(), 'lr': 0.1},
-             {'params': model.classifierhat.parameters(), 'lr': 0.1},
-             {'params': model.classifiergender.parameters(), 'lr': 0.1},
-         ], weight_decay=5e-4, momentum=0.9, nesterov=True)
+             {'params': model.classifier.parameters(), 'lr': 0.1}]
+    for attr in model.labels:
+        name = 'classifier'+str(attr)
+        list_optim = list_optim + [{'params': getattr(model,name).parameters(), 'lr': 0.1}]
+        
+    optimizer_ft = optim.SGD(list_optim, weight_decay=5e-4, momentum=0.9, nesterov=True)
     
 elif not opt.PCB:
     ignored_params = list(map(id, model.model.fc.parameters() )) + list(map(id, model.classifier.parameters() ))

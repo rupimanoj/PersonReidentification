@@ -84,10 +84,18 @@ class ft_attr_net(nn.Module):
         model_ft.avgpool = nn.AdaptiveAvgPool2d((1,1))
         self.model = model_ft
         self.classifier = ClassBlock(2048, class_num)
-        self.classifier1 = ClassBlock(2048, 4)
-        self.classifier2 = ClassBlock(2048, 2)
-        self.classifier3 = ClassBlock(2048, 9)
-        self.classifier4 = ClassBlock(2048, 8)
+        self.labels = ['age' ,'backpack' ,'bag', 'handbag', 'downcolor', 'upcolor' ,'clothes', 'down',
+                                                     'up', 'hair' ,'hat', 'gender']            
+        for attr in self.labels:
+            name = 'classifier'+str(attr)
+            if(attr == 'age'):
+                setattr(self, name, ClassBlock(2048, 4))
+            elif(attr == 'upcolor'):
+                setattr(self, name, ClassBlock(2048, 8))
+            elif(attr == 'downcolor'):
+                setattr(self, name, ClassBlock(2048, 9))
+            else:
+                setattr(self, name, ClassBlock(2048, 2))
 
     def forward(self, x):
         x = self.model.conv1(x)
@@ -102,15 +110,12 @@ class ft_attr_net(nn.Module):
         x = torch.squeeze(x)
         y = []
         y.append(self.classifier(x))
-        y.append(self.classifier1(x))
-        for i in range(11):
-            if(i==3):
-                y.append(self.classifier3(x))
-            elif(i==4):
-                y.append(self.classifier4(x))
-            else:
-                y.append(self.classifier2(x))
-        
+        for attr in self.labels:
+            name = 'classifier'+str(attr)
+            c = getattr(self,name)
+            predict_attr = c(x)
+            y.append(predict_attr)
+        y.append(x)
         return y
 
 # Define the DenseNet121-based Model
