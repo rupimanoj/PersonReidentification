@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 from PIL import Image
 import time
 import os
-from model import ft_net, ft_net_dense, PCB, ft_attr_net, ft_attr_net_dense
+from model import ft_net, ft_net_dense, PCB, ft_attr_net, ft_attr_net_dense, ft_no_attr_net_dense
 from random_erasing import RandomErasing
 import json
 from shutil import copyfile
@@ -31,14 +31,13 @@ print(os.system('ls'))
 parser = argparse.ArgumentParser(description='Training')
 parser.add_argument('--gpu_ids',default='0', type=str,help='gpu_ids: e.g. 0  0,1,2  0,2')
 parser.add_argument('--name',default='ft_ResNet50', type=str, help='output model name')
-parser.add_argument('--data_dir',default='../../data/Market/pytorch',type=str, help='training dir path')
+parser.add_argument('--data_dir',default='../../data/MDuke/pytorch',type=str, help='training dir path')
 parser.add_argument('--train_all', action='store_true', help='use all training data' )
 parser.add_argument('--color_jitter', action='store_true', help='use color jitter in training' )
 parser.add_argument('--batchsize', default=32, type=int, help='batchsize')
 parser.add_argument('--erasing_p', default=0, type=float, help='Random Erasing probability, in [0,1]')
 parser.add_argument('--use_dense', action='store_true', help='use densenet121' )
 parser.add_argument('--PCB', action='store_true', help='use PCB+ResNet50' )
-parser.add_argument('--attr', action='store_true', help='use Attribute+ResNet50' )
 parser.add_argument('--freeze_learning', action='store_true', help='use Attribute+ResNet50' )
 
 opt = parser.parse_args()
@@ -56,9 +55,6 @@ for str_id in str_ids:
 if len(gpu_ids)>0:
     torch.cuda.set_device(gpu_ids[0])
 #print(gpu_ids[0])
-use_attr = False
-if opt.attr:
-    use_attr = True
 ######################################################################
 # Load Data
 # ---------
@@ -126,8 +122,8 @@ class_names = image_datasets['train'].classes
 
 use_gpu = torch.cuda.is_available()
 
-if opt.use_dense and use_attr:
-    model = ft_attr_net_dense(len(class_names))
+if opt.use_dense:
+    model = ft_no_attr_net_dense(len(class_names))
 elif use_attr:
     model = ft_attr_net(len(class_names))
 else:
@@ -144,46 +140,6 @@ if use_gpu:
 since = time.time()
 inputs, classes = next(iter(dataloaders['train']))
 print(time.time()-since)
-
-b = np.load('labels.npy')
-list_indices = []
-for index,label in enumerate(b):
-    if(label in model.labels):
-        list_indices.append(index)
-        
-a = np.load('attribute_data.npy')
-print('shape',a.shape)
-print(a[:,0])
-a = a[:,list_indices]
-
-down = ['downblack',
- 'downblue',
- 'downbrown',
- 'downgray',
- 'downgreen',
- 'downpink',
- 'downpurple',
- 'downwhite',
- 'downyellow']
-
-up = ['upblack',
- 'upblue',
- 'upgreen',
- 'upgray',
- 'uppurple',
- 'upred',
- 'upwhite',
- 'upyellow']
-
-i = 0
- 
-for ele in a[0:20]:
-    print(i, down[ele[4]], up[ele[5]])
-    i += 1
-    
-attr_data = torch.from_numpy(a)
-print('attr_data.shape')
-print(attr_data.shape)
 
 ######################################################################
 # Training the model
@@ -251,32 +207,22 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
 
             running_loss = 0.0
             running_corrects = 0.0
-            running_attr_loss = 0.0
-            running_attr_corrects = np.zeros((model_output_size))
             # Iterate over data.
             
             for data in dataloaders[phase]:
                 # get the inputs
                 inputs, labels = data
                 now_batch_size,c,h,w = inputs.shape
-                print("labels.......", labels)
+                
                 if now_batch_size<opt.batchsize: # skip the last batch
                     continue
                 #print(inputs.shape)
                 # wrap them in Variable
-                 
-                try:
-                    batch_attr_data = attr_data[labels]
-                except:
-                    print(labels)
-                
-                
                 if use_gpu:
                     inputs = Variable(inputs.cuda())
                     labels = Variable(labels.cuda())
-                    batch_attr_data = Variable(batch_attr_data.cuda()).long()
                 else:
-                    inputs, labels, batch_attr_data = Variable(inputs), Variable(labels), Variable(batch_attr_data)
+                    inputs, labels = Variable(inputs), Variable(labels)
                     
                
                 # zero the parameter gradients
@@ -287,24 +233,9 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
                 
                 if not opt.PCB:
                     _, preds = torch.max(outputs[0].data, 1)
-                    attr_preds = []
-                    for i in range(model_output_size):
-                        _, temp_preds = torch.max(outputs[i+1].data, 1)
-                        attr_preds.append(temp_preds)
-                        
                     identity_loss = criterion(outputs[0], labels)
-                    attr_loss =  criterion(outputs[1], batch_attr_data[:,0])
-                  
-                    for i in range(1,model_output_size):
-                        if(i == 4):
-                            attr_loss = attr_loss + 1 * criterion(outputs[i+1], batch_attr_data[:,i])
-                        if(i == 5):
-                            attr_loss = attr_loss + 1 * criterion(outputs[i+1], batch_attr_data[:,i])
-                        else:
-                            attr_loss = attr_loss + criterion(outputs[i+1], batch_attr_data[:,i])
-                  
-                    #total_loss = identity_loss #+ 0.01*attr_loss
-                    total_loss = 0.9897*identity_loss + 0.0103*attr_loss
+                    total_loss = identity_loss #+ 0.01*attr_loss
+                    #total_loss = 0.9*identity_loss + 0.1*attr_loss
                 
                 else:
                     part = {}
@@ -328,29 +259,18 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
                 # statistics
                 if int(version[2]) > 3: # for the new version like 0.4.0 and 0.5.0
                     running_loss += identity_loss.item() * now_batch_size
-                    running_attr_loss += attr_loss.item() * now_batch_size
                 else :  # for the old version like 0.3.0 and 0.3.1
                     running_loss += total_loss.data[0] * now_batch_size
                # print(identity_loss, attr_loss)
                 running_corrects += float(torch.sum(preds == labels.data))
                 
-                for i in range(model_output_size):
-                    running_attr_corrects[i] += float(torch.sum(attr_preds[i] == batch_attr_data[:,i].data))
-                
              #   print(  8*identity_loss.item()* now_batch_size, 0.083*attr_loss.item()* now_batch_size, total_loss.item() * now_batch_size)
 
             epoch_loss = running_loss / dataset_sizes[phase]
-            epoch_attr_loss = running_attr_loss / dataset_sizes[phase]
             epoch_acc = running_corrects / dataset_sizes[phase]
-            attr_epoch_acc = np.zeros((model_output_size))
-            for i in range(model_output_size):
-                attr_epoch_acc[i] = running_attr_corrects[i] / dataset_sizes[phase]
-                
-            print('{} Loss: {:.4f} Attr Loss: {:.4f} Acc: {:.4f}'.format(
-                phase, epoch_loss, epoch_attr_loss, epoch_acc))
-           # print(running_loss,epoch_loss)
-            print('attribute accuracies')
-            print(attr_epoch_acc)
+            
+            print('{} Loss: {:.4f} Acc: {:.4f}'.format(
+                phase, epoch_loss, epoch_acc))
             
             y_loss[phase].append(epoch_loss)
             y_err[phase].append(1.0-epoch_acc)            
@@ -414,25 +334,7 @@ def save_network(network, epoch_label):
 
 criterion = nn.CrossEntropyLoss().cuda()
 
-if use_attr:
-    
-    ignored_params = list(map(id, model.model.fc.parameters())) + list(map(id, model.classifier.parameters() )) 
-    for attr in model.labels:
-        attr_name = 'classifier'+str(attr)
-        ignored_params = ignored_params + list(map(id, getattr(model,attr_name).parameters()))
-    
-    base_params = filter(lambda p: id(p) not in ignored_params, model.parameters())
-    list_optim = [
-             {'params': base_params, 'lr': 0.01},
-             {'params': model.model.fc.parameters(), 'lr': 0.1},
-             {'params': model.classifier.parameters(), 'lr': 0.1}]
-    for attr in model.labels:
-        attr_name = 'classifier'+str(attr)
-        list_optim = list_optim + [{'params': getattr(model,attr_name).parameters(), 'lr': 0.1}]
-        
-    optimizer_ft = optim.SGD(list_optim, weight_decay=5e-4, momentum=0.9, nesterov=True)
-    
-elif not opt.PCB:
+if not opt.PCB:
     ignored_params = list(map(id, model.model.fc.parameters() )) + list(map(id, model.classifier.parameters() ))
     base_params = filter(lambda p: id(p) not in ignored_params, model.parameters())
     optimizer_ft = optim.SGD([
@@ -483,7 +385,7 @@ print(os.path.isdir(dir_name))
 if not os.path.isdir(dir_name):
     print("creating model folder-------------------")
     os.mkdir(dir_name)
-    copyfile('./train_attr.py', dir_name+'/train_attr.py')
+    copyfile('./train_no_attr.py', dir_name+'/train_no_attr.py')
     copyfile('./model.py', dir_name+'/model.py')
 
 # save opts

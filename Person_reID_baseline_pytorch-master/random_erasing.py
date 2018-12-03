@@ -34,22 +34,41 @@ class RandomErasing(object):
 
         for attempt in range(100):
             area = img.size()[1] * img.size()[2]
-       
+            changed = False
             target_area = random.uniform(self.sl, self.sh) * area
             aspect_ratio = random.uniform(self.r1, 1/self.r1)
-
-            h = int(round(math.sqrt(target_area * aspect_ratio)))
-            w = int(round(math.sqrt(target_area / aspect_ratio)))
-
-            if w < img.size()[2] and h < img.size()[1]:
-                x1 = random.randint(0, img.size()[1] - h)
-                y1 = random.randint(0, img.size()[2] - w)
-                if img.size()[0] == 3:
-                    img[0, x1:x1+h, y1:y1+w] = self.mean[0]
-                    img[1, x1:x1+h, y1:y1+w] = self.mean[1]
-                    img[2, x1:x1+h, y1:y1+w] = self.mean[2]
-                else:
-                    img[0, x1:x1+h, y1:y1+w] = self.mean[0]
+            target_area_list = []
+            """
+            if random.uniform(0, 1) > 0.5:
+                area1 = random.uniform(0.0, 1.0)
+                area2 = random.uniform(0.0, 1.0)
+                area3 = random.uniform(0.0, 1.0)
+                area_sum = area1 + area2 + area3
+                area1 = area1/area_sum
+                area2 = area2/area_sum
+                area3 = area3/area_sum
+                target_area_list.append(area1*target_area)
+                target_area_list.append(area2*target_area)
+                target_area_list.append(area3*target_area)
+            else:
+            """
+            target_area_list.append(target_area)
+            for i in range(len(target_area_list)):
+                target_area = target_area_list[i]
+                #print(target_area)
+                h = int(round(math.sqrt(target_area * aspect_ratio)))
+                w = int(round(math.sqrt(target_area / aspect_ratio)))
+                if w < img.size()[2] and h < img.size()[1]:
+                    changed = True
+                    x1 = random.randint(0, img.size()[1] - h)
+                    y1 = random.randint(0, img.size()[2] - w)
+                    if img.size()[0] == 3:
+                        img[0, x1:x1+h, y1:y1+w] = self.mean[0]
+                        img[1, x1:x1+h, y1:y1+w] = self.mean[1]
+                        img[2, x1:x1+h, y1:y1+w] = self.mean[2]
+                    else:
+                        img[0, x1:x1+h, y1:y1+w] = self.mean[0]
+            if(changed):
                 return img
 
         return img

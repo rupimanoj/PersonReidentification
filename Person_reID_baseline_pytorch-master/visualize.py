@@ -37,7 +37,7 @@ def visuvalize(arr,names_q,labels_q,dict_mapping,dict_labels,query_path,gallery_
 def view(query,q_label,dict_mapping,dict_labels,query_path,gallery_path):
     src_path=query_path+"/"+query+".png"
     fig,axs = plt.subplots(1,11,figsize=(16, 4))
-    fig.suptitle("For single query", fontsize=16)
+    fig.suptitle("For query %d"%q_label, fontsize=16)
     im = plt.imread(src_path)
     axs[0].imshow(im)
     axs[0].set_title("query",color='green')
@@ -52,6 +52,25 @@ def view(query,q_label,dict_mapping,dict_labels,query_path,gallery_path):
             axs[k+1].set_title('%d'%(k+1), color='green')
         else:
             axs[k+1].set_title('%d'%(k+1), color='red')
+        axs[k+1].axis("off")
+        k=k+1
+    return fig
+
+def view_query(query,dict_mapping,query_path,gallery_path):
+    src_path=query_path+"/"+query+".png"
+    fig,axs = plt.subplots(1,11,figsize=(16, 4))
+    fig.suptitle("For query %s"%query, fontsize=16)
+    im = plt.imread(src_path)
+    axs[0].imshow(im)
+    axs[0].set_title("query")
+    axs[0].axis("off")
+    k=0
+    for i in dict_mapping[query]:
+        img_path = gallery_path+"/"+i+".png"
+        label = j
+        im = plt.imread(img_path)
+        axs[k+1].imshow(im)
+        axs[k+1].set_title('%d'%(k+1))
         axs[k+1].axis("off")
         k=k+1
     return fig
@@ -95,11 +114,12 @@ def get_worstten(names_q,labels_q,dict_labels):
 def main():
     # settings
     parser = argparse.ArgumentParser(description='Visualize')
-    parser.add_argument('--features', type=str, default='../Market-1501-v15.09.15/extracted')
-    parser.add_argument('--labels', type=str, default='../Market-1501-v15.09.15/extracted')
+    parser.add_argument('--features', type=str, default='../../data/Market/extracted_mduke_all')
+    parser.add_argument('--labels', type=str, default='../../data/Market/extracted_mduke_all')
     parser.add_argument('--gpu', type=int, default=0)
     parser.add_argument('--query_index', default=0, type=int, help='test_image_index')
-    parser.add_argument('--data_path',default='../valSet',type=str, help='./test_data')
+    parser.add_argument('--data_path',default='../../data/Market/val',type=str, help='./test_data')
+    parser.add_argument('--query_name',type=str)
     args = parser.parse_args()
 
     logPath = args.features
@@ -112,11 +132,15 @@ def main():
     if not os.path.isdir(data_path):
         raise Exception('Give correct folder name where validation data files are present')
     q_index=args.query_index
+    q_name=args.query_name
     if(q_index>149):
         raise Exception("Index should be less tha 150")
     query_path=data_path+"/query"
     gallery_path=data_path+"/gallery"
     figures_path="./visualization"
+    test_path= "../../data/Market/val"
+    if not os.path.isdir(test_path):
+        raise Exception('test data files are not present')
     if not os.path.isdir(figures_path):
         os.mkdir(figures_path)
     
@@ -140,21 +164,22 @@ def main():
         dict_mapping[names['query'][i]]=[names['gallery'][i] for i in temp]
         dict_labels[labels['query'][i]]=[labels['gallery'][i] for i in temp]
 
-
+    #q_fig=view_query(q_name,dict_mapping,test_path,gallery_path)
+    #q_fig.savefig(figures_path+"/query_%s.png"%q_name)
     q_fig=view(names['query'][q_index],labels['query'][q_index],dict_mapping,dict_labels,query_path,gallery_path)
-    q_fig.savefig(figures_path+"/query.png")
+    q_fig.savefig(figures_path+"/query_%d.png"%q_index)
 
     #best 10 are those images which contain same label as query image in first 3 images
-    best_10 = get_bestten(names['query'],labels['query'],dict_labels)
+    #best_10 = get_bestten(names['query'],labels['query'],dict_labels)
 
     #worst_10 are those images which do not contain same label as query image in all 10 images
-    worst_10= get_worstten(names['query'],labels['query'],dict_labels)
+    #worst_10= get_worstten(names['query'],labels['query'],dict_labels)
 
-    best_fig=visuvalize(best_10,names['query'],labels['query'],dict_mapping,dict_labels,query_path,gallery_path,"Top 10 queries")
-    best_fig.savefig(figures_path+"/Best10.png")
+    #best_fig=visuvalize(best_10,names['query'],labels['query'],dict_mapping,dict_labels,query_path,gallery_path,"Top 10 queries")
+    #best_fig.savefig(figures_path+"/Best10.png")
 
-    worst_fig=visuvalize(worst_10,names['query'],labels['query'],dict_mapping,dict_labels,query_path,gallery_path,"Worst %d queries"%(len(worst_10)))
-    worst_fig.savefig(figures_path+"/Worst%d.png"%len(worst_10))
+    #worst_fig=visuvalize(worst_10,names['query'],labels['query'],dict_mapping,dict_labels,query_path,gallery_path,"Worst %d queries"%(len(worst_10)))
+    #worst_fig.savefig(figures_path+"/Worst%d.png"%len(worst_10))
 
 if __name__ == '__main__':
     main()

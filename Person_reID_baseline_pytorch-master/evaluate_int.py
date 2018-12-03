@@ -56,14 +56,13 @@ def evaluate(score, ql, qc, gl, gc):
 def main():
     # settings
     parser = argparse.ArgumentParser()
-    parser.add_argument('--features', type=str, default='../data/Market/extracted')
-    parser.add_argument('--labels', type=str, default='../data/Market/extracted')
+    parser.add_argument('--model_name', type=str, default='empty')
     parser.add_argument('--gpu', type=int, default=0)
     args = parser.parse_args()
 
     torch.cuda.set_device(args.gpu)
-    logPath = args.features
-    labelPath = args.labels
+    logPath = '../../data/Market/extracted_' + args.model_name
+    labelPath = '../../data/Market/label_files'
 
     logFile = {subset: scipy.io.loadmat(os.path.join(logPath, 'feature_val_%s.mat' % subset))
                for subset in ['query', 'gallery']}

@@ -10,21 +10,21 @@ from torchvision import datasets, models, transforms
 import time
 import os
 import scipy.io
-from model import ft_net
+from model import ft_net, ft_attr_net_dense,ft_no_attr_net_dense
 from torch.utils.data import Dataset, DataLoader
 from PIL import Image
 from tqdm import tqdm
+import subprocess
 
-data_dir = "../data/Market/int/val"
-gallery_dir_path = "../data/Market/int/val/gallery"
-query_dir_path = "../data/Market/int/val/query"
-model_name = "ft_ResNet50"
-log_dir = "../data/Market/extracted"
 
 parser = argparse.ArgumentParser(description='Training')
 parser.add_argument('--gpu_ids',default='0', type=str,help='gpu_ids: e.g. 0  0,1,2  0,2')
 parser.add_argument('--which_epoch',default='last', type=str, help='0,1,2,3...or last')
+parser.add_argument('--model_name',default='ft_ResNet50', type=str, help='0,1,2,3...or last')
 parser.add_argument('--batchsize', default=32, type=int, help='batchsize')
+parser.add_argument('--data_dir',default='../../data/Market/testSet', type=str, help='0,1,2,3...or last')
+parser.add_argument('--info_location',default='../../data/Market/label_files',type=str, help='training dir path')
+
 
 opt = parser.parse_args()
 gpu_ids = []
@@ -33,6 +33,18 @@ for str_id in str_ids:
     id = int(str_id)
     if id >=0:
         gpu_ids.append(id)
+
+model_name = opt.model_name
+gallery_dir_path = "../../data/Market/testSet" + "/gallery"
+query_dir_path = "../../data/Market/testSet" + "/query"
+log_dir = "../../data/Market/extracted_" + model_name
+
+
+if(not os.path.exists(log_dir)):
+    subprocess.call(["mkdir", log_dir])
+text_files = opt.info_location+"/."
+subprocess.call(["cp", "-r", text_files, log_dir])
+subprocess.call(["rm", "-rf", "*.mat"])
 
 # set gpu ids
 if len(gpu_ids)>0:
@@ -48,7 +60,7 @@ def load_network(network):
     network.load_state_dict(torch.load(save_path))
     return network
 	
-model_structure = ft_net(751)
+model_structure = ft_no_attr_net_dense(1453)
 model = load_network(model_structure)
 model = model.eval()
 use_gpu = torch.cuda.is_available()
@@ -83,8 +95,8 @@ def extractor(model, dataloader):
         names, images = sample['name'], sample['img']
         print("------------------",images.size())
 		#ff = torch.FloatTensor(n,2048).zero_()
-        ff = model(Variable(images.cuda(), volatile=True)).data.cpu()
-        ff = ff + model(Variable(fliplr(images).cuda(), volatile=True)).data.cpu()
+        ff = model(Variable(images.cuda(), volatile=True))[-1].data.cpu()
+        ff = ff + model(Variable(fliplr(images).cuda(), volatile=True))[-1].data.cpu()
         print(ff.shape,"*************************")
         ff_norm = torch.norm(ff, p = 2, dim = 1, keepdim = True)
         print(ff_norm.shape,"====================")

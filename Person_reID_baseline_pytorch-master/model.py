@@ -3,7 +3,7 @@ import torch.nn as nn
 from torch.nn import init
 from torchvision import models
 from torch.autograd import Variable
-
+import os
 ######################################################################
 def weights_init_kaiming(m):
     classname = m.__class__.__name__
@@ -22,7 +22,11 @@ def weights_init_classifier(m):
     if classname.find('Linear') != -1:
         init.normal(m.weight.data, std=0.001)
         init.constant(m.bias.data, 0.0)
-
+        
+def load_network(network):
+    save_path = os.path.join('./model',"dense_attr_64_color_erasing",'net_59.pth')
+    network.load_state_dict(torch.load(save_path))
+    return network
 # Defines the new fc layer and classification layer
 # |--Linear--|--bn--|--relu--|--Linear--|
 class ClassBlock(nn.Module):
@@ -47,8 +51,13 @@ class ClassBlock(nn.Module):
         self.classifier = classifier
     def forward(self, x):
         x = self.add_block(x)
+        x1 = x
         x = self.classifier(x)
-        return x
+        y = []
+        y.append(x)
+        y.append(x1)
+        #return x
+        return y
 
 # Define the ResNet50-based Model
 class ft_net(nn.Module):
@@ -129,13 +138,36 @@ class ft_net_dense(nn.Module):
         self.model = model_ft
         # For DenseNet, the feature dim is 1024 
         self.classifier = ClassBlock(1024, class_num)
-
+    
     def forward(self, x):
         x = self.model.features(x)
         x = torch.squeeze(x)
         x = self.classifier(x)
         return x
+# Define the DenseNet121-based Model
+# Define the DenseNet121-based Model
+class ft_no_attr_net_dense(nn.Module):
 
+    def __init__(self, class_num ):
+        super().__init__()
+        model_ft = models.densenet121(pretrained=True)
+        model_ft.features.avgpool = nn.AdaptiveAvgPool2d((1,1))
+        model_ft.fc = nn.Sequential()
+        self.model = model_ft
+        # For DenseNet, the feature dim is 1024 
+        self.classifier = ClassBlock(1024, class_num)
+
+    def forward(self, x):
+        x = self.model.features(x)
+        x = torch.squeeze(x)
+        #print("x size: ", x.size())
+        x1 = self.classifier(x)[0]
+        x2 = self.classifier(x)[1] 
+        y = []
+        y.append(x1)
+        y.append(x)
+        return y
+    
 # Define the DenseNet121-based Model
 class ft_attr_net_dense(nn.Module):
 
@@ -163,14 +195,18 @@ class ft_attr_net_dense(nn.Module):
     def forward(self, x):
         x = self.model.features(x)
         x = torch.squeeze(x)
-        x1 = self.classifier(x)
+        #print("x size: ", x.size())
+        x1 = self.classifier(x)[0]
+        x2 = self.classifier(x)[1] 
         y = []
         y.append(x1)
         for attr in self.labels:
             name = 'classifier'+str(attr)
             c = getattr(self,name)
-            predict_attr = c(x)
+            predict_attr = c(x)[0]
             y.append(predict_attr)
+        #x3 = torch.cat((x, x2), 1)
+        #y.append(torch.cat((x, x1), 1))
         y.append(x)
         return y
     
@@ -474,9 +510,9 @@ class PCB_test(nn.Module):
 
 # debug model structure
 #net = ft_net(751)
-net = ft_net_dense(751)
+net = ft_attr_net_dense(751)
 #print(net)
 input = Variable(torch.FloatTensor(8, 3, 224, 224))
-output = net(input)
+output = net(input)[-1]
 print('net output size:')
 print(output.shape)

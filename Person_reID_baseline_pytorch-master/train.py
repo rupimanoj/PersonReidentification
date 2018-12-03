@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 from PIL import Image
 import time
 import os
-from model import ft_net, ft_net_dense, PCB
+from model import ft_net, ft_net_dense, PCB, ft_net_dense_mkt
 from random_erasing import RandomErasing
 import json
 from shutil import copyfile
@@ -30,7 +30,7 @@ version =  torch.__version__
 parser = argparse.ArgumentParser(description='Training')
 parser.add_argument('--gpu_ids',default='0', type=str,help='gpu_ids: e.g. 0  0,1,2  0,2')
 parser.add_argument('--name',default='ft_ResNet50', type=str, help='output model name')
-parser.add_argument('--data_dir',default='../data/Market/pytorch',type=str, help='training dir path')
+parser.add_argument('--data_dir',default='../../data/Duke/pytorch',type=str, help='training dir path')
 parser.add_argument('--train_all', action='store_true', help='use all training data' )
 parser.add_argument('--color_jitter', action='store_true', help='use color jitter in training' )
 parser.add_argument('--batchsize', default=32, type=int, help='batchsize')
@@ -150,7 +150,10 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
     for epoch in range(num_epochs):
         print('Epoch {}/{}'.format(epoch, num_epochs - 1))
         print('-' * 10)
-
+        if(epoch == 0):
+            freeze_pretrained_model(model)
+        if(epoch == 30):
+            unfreeze_pretrained_model(model)
         # Each epoch has a training and validation phase
         for phase in ['train', 'val']:
             if phase == 'train':
@@ -221,7 +224,7 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
             # deep copy the model
             if phase == 'val':
                 last_model_wts = model.state_dict()
-                if epoch%10 == 9:
+                if epoch%3 == 2:
                     save_network(model, epoch)
                 draw_curve(epoch)
 
@@ -266,7 +269,14 @@ def save_network(network, epoch_label):
     if torch.cuda.is_available():
         network.cuda(gpu_ids[0])
 
+def freeze_pretrained_model(model):
+    for name, param in model.named_parameters():
+        if("model" in name):
+            param.requires_grad = False
 
+def unfreeze_model(model):
+    for name, param in model.named_parameters():
+            param.requires_grad = True
 ######################################################################
 # Finetuning the convnet
 # ----------------------
@@ -275,7 +285,8 @@ def save_network(network, epoch_label):
 #
 
 if opt.use_dense:
-    model = ft_net_dense(len(class_names))
+    print("---------------length------------", len(class_names))
+    model = ft_net_dense_mkt(len(class_names))
 else:
     model = ft_net(len(class_names))
 
@@ -293,9 +304,9 @@ if not opt.PCB:
     ignored_params = list(map(id, model.model.fc.parameters() )) + list(map(id, model.classifier.parameters() ))
     base_params = filter(lambda p: id(p) not in ignored_params, model.parameters())
     optimizer_ft = optim.SGD([
-             {'params': base_params, 'lr': 0.01},
-             {'params': model.model.fc.parameters(), 'lr': 0.1},
-             {'params': model.classifier.parameters(), 'lr': 0.1}
+             {'params': base_params, 'lr': 0.001},
+             {'params': model.model.fc.parameters(), 'lr': 0.01},
+             {'params': model.classifier.parameters(), 'lr': 0.01}
          ], weight_decay=5e-4, momentum=0.9, nesterov=True)
 else:
     ignored_params = list(map(id, model.model.fc.parameters() ))
@@ -343,5 +354,5 @@ with open('%s/opts.json'%dir_name,'w') as fp:
     json.dump(vars(opt), fp, indent=1)
 
 model = train_model(model, criterion, optimizer_ft, exp_lr_scheduler,
-                       num_epochs=60)
+                       num_epochs=35)
 
