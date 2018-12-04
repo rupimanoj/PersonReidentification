@@ -31,7 +31,7 @@ print(os.system('ls'))
 parser = argparse.ArgumentParser(description='Training')
 parser.add_argument('--gpu_ids',default='0', type=str,help='gpu_ids: e.g. 0  0,1,2  0,2')
 parser.add_argument('--name',default='ft_ResNet50', type=str, help='output model name')
-parser.add_argument('--data_dir',default='../../data/Market/pytorch',type=str, help='training dir path')
+parser.add_argument('--data_dir',default='../../data/MDuke/pytorch',type=str, help='training dir path')
 parser.add_argument('--train_all', action='store_true', help='use all training data' )
 parser.add_argument('--color_jitter', action='store_true', help='use color jitter in training' )
 parser.add_argument('--batchsize', default=32, type=int, help='batchsize')
@@ -145,46 +145,29 @@ since = time.time()
 inputs, classes = next(iter(dataloaders['train']))
 print(time.time()-since)
 
-b = np.load('labels.npy')
 list_indices = []
-for index,label in enumerate(b):
-    if(label in model.labels):
+for index,label in enumerate(model.labels):
         list_indices.append(index)
-        
-a = np.load('attribute_data.npy')
-print('shape',a.shape)
-print(a[:,0])
-a = a[:,list_indices]
+attr_size = len(list_indices)
 
-down = ['downblack',
- 'downblue',
- 'downbrown',
- 'downgray',
- 'downgreen',
- 'downpink',
- 'downpurple',
- 'downwhite',
- 'downyellow']
-
-up = ['upblack',
- 'upblue',
- 'upgreen',
- 'upgray',
- 'uppurple',
- 'upred',
- 'upwhite',
- 'upyellow']
-
-i = 0
- 
-for ele in a[0:20]:
-    print(i, down[ele[4]], up[ele[5]])
-    i += 1
-    
-attr_data = torch.from_numpy(a)
-print('attr_data.shape')
+market_data = np.load('attribute_data.npy')
+duke_data = np.load('duke_attr/attribute_data.npy')
+market_data = market_data[0:751]
+#print(market_data.shape, duke_data.shape)
+market_offset_size = duke_data.shape[1]
+duke_offset_size = market_data.shape[1]
+market_offset = np.full((market_data.shape[0], market_offset_size), 0)
+duke_offset = np.full((duke_data.shape[0], duke_offset_size), 0)
+final_market_data = np.concatenate((market_data, market_offset), axis=1)
+final_duke_data = np.concatenate((duke_offset,duke_data), axis=1)
+#print(final_market_data.shape, final_duke_data.shape)
+final_data = np.concatenate((final_market_data,final_duke_data), axis=0)
+#print(final_data.shape)
+#final_data =  market_data
+attr_data = torch.from_numpy(final_data)
+print('--------------attr_data.shape-----------------')
 print(attr_data.shape)
-
+print('-----class_size----------', len(class_names))
 ######################################################################
 # Training the model
 # ------------------
@@ -220,18 +203,7 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
     best_model_wts = model.state_dict()
     best_acc = 0.0
     
-    #dummy call to get the number of attributes in the model
-    for data in dataloaders['train']:      
-        inputs, labels = data              
-        if use_gpu:
-            inputs = Variable(inputs.cuda())
-        else:
-            inputs = Variable(inputs)
-        outputs = model(inputs)
-        model_output_size = len(outputs) - 2
-        break
-    print('No. of Attributes selected')
-    print(model_output_size)
+    
     for epoch in range(num_epochs):
         print('Epoch {}/{}'.format(epoch, num_epochs - 1))
         print('-' * 10)
@@ -252,14 +224,18 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
             running_loss = 0.0
             running_corrects = 0.0
             running_attr_loss = 0.0
-            running_attr_corrects = np.zeros((model_output_size))
+            running_attr_corrects = np.zeros((attr_size))
             # Iterate over data.
             
             for data in dataloaders[phase]:
                 # get the inputs
                 inputs, labels = data
                 now_batch_size,c,h,w = inputs.shape
-                print("labels.......", labels)
+                duke_mask = labels >= 751
+                market_mask = labels < 751
+#                 print(labels)
+#                 print(duke_mask)
+#                 print(market_mask)
                 if now_batch_size<opt.batchsize: # skip the last batch
                     continue
                 #print(inputs.shape)
@@ -284,27 +260,28 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
 
                 # forward
                 outputs = model(inputs)
-                
+                #print("..................", outputs.shape)
                 if not opt.PCB:
+                    #print("-------------shape", outputs[0].shape)
                     _, preds = torch.max(outputs[0].data, 1)
                     attr_preds = []
-                    for i in range(model_output_size):
+                    for i in range(attr_size):
                         _, temp_preds = torch.max(outputs[i+1].data, 1)
                         attr_preds.append(temp_preds)
                         
                     identity_loss = criterion(outputs[0], labels)
-                    attr_loss =  criterion(outputs[1], batch_attr_data[:,0])
-                  
-                    for i in range(1,model_output_size):
-                        if(i == 4):
-                            attr_loss = attr_loss + 1 * criterion(outputs[i+1], batch_attr_data[:,i])
-                        if(i == 5):
-                            attr_loss = attr_loss + 1 * criterion(outputs[i+1], batch_attr_data[:,i])
-                        else:
-                            attr_loss = attr_loss + criterion(outputs[i+1], batch_attr_data[:,i])
-                  
-                    #total_loss = identity_loss #+ 0.01*attr_loss
-                    total_loss = 0.9897*identity_loss + 0.0103*attr_loss
+                    total_loss = identity_loss
+                    
+                    #if(market_mask.shape[0] > 0):
+                    attr_loss =  criterion(outputs[1][market_mask,:], batch_attr_data[market_mask,0])
+                    for i in range(1,12): #attr_size
+                        attr_loss = attr_loss + criterion(outputs[i+1][market_mask,:], batch_attr_data[market_mask,i])
+                    
+                    #if(duke_mask.shape[0] > 0):    
+                    for i in range(10):
+                        if(i != 7):
+                            attr_loss = attr_loss + criterion(outputs[i+13][duke_mask,:], batch_attr_data[duke_mask,i+12])
+                    total_loss += 0.01*attr_loss
                 
                 else:
                     part = {}
@@ -334,7 +311,7 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
                # print(identity_loss, attr_loss)
                 running_corrects += float(torch.sum(preds == labels.data))
                 
-                for i in range(model_output_size):
+                for i in range(attr_size):
                     running_attr_corrects[i] += float(torch.sum(attr_preds[i] == batch_attr_data[:,i].data))
                 
              #   print(  8*identity_loss.item()* now_batch_size, 0.083*attr_loss.item()* now_batch_size, total_loss.item() * now_batch_size)
@@ -342,8 +319,8 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
             epoch_loss = running_loss / dataset_sizes[phase]
             epoch_attr_loss = running_attr_loss / dataset_sizes[phase]
             epoch_acc = running_corrects / dataset_sizes[phase]
-            attr_epoch_acc = np.zeros((model_output_size))
-            for i in range(model_output_size):
+            attr_epoch_acc = np.zeros((attr_size))
+            for i in range(attr_size):
                 attr_epoch_acc[i] = running_attr_corrects[i] / dataset_sizes[phase]
                 
             print('{} Loss: {:.4f} Attr Loss: {:.4f} Acc: {:.4f}'.format(

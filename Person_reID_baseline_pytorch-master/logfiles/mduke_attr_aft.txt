@@ -1,0 +1,1825 @@
+attribute_data.npy
+Attributes verification.ipynb
+collect_results.py
+demo.py
+downcolor.npy
+duke_attr
+duke_attribute_data.npy
+duke_attribute.mat
+duke_attribute.mat.1
+duke_downcolor.npy
+duke_labels.npy
+duke_upcolor.npy
+Ensembling experimentation.ipynb
+erasing_data_augmentation_checking.ipynb
+evaluate_ensemble.py
+evaluate_gpu.py
+evaluate_int.py
+evaluate.py
+evaluate_rerank.py
+extract.py
+extract_tta.py
+feeze_learning.ipynb
+images_collection.ipynb
+labels.npy
+LICENSE
+load_mat_file.py
+logfiles
+make_mduke.py
+market_attribute.mat
+mduke_attr_aft.txt
+mduke_attr_mon.txt
+mduke_attr.txt
+model
+model.py
+multi_random_erasing.py
+multi_step_LR_3
+prepare.py
+prepare_static.py
+__pycache__
+random_erasing.py
+README.md
+re_ranking.py
+results_collection.ipynb
+test.py
+train_attr_dl.py
+train_attr.py
+train_duke.py
+train.jpg
+train_mduke_attr.py
+train_no_attr.py
+train_pcb_attr.py
+train.py
+tta_expermimenation.ipynb
+tutorial
+untitled
+untitled1
+Untitled1.ipynb
+Untitled2.ipynb
+Untitled.ipynb
+upcolor.npy
+use_info.md
+visualization
+visualize.py
+net output size:
+torch.Size([8, 1024])
+0
+[ColorJitter(brightness=0.1, contrast=0.1, saturation=0.1, hue=0), Resize(size=(288, 144), interpolation=PIL.Image.BICUBIC), RandomCrop(size=(256, 128), padding=0), RandomHorizontalFlip(p=0.5), ToTensor(), Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]), <random_erasing.RandomErasing object at 0x7f103f56d240>]
+ft_attr_net_dense(
+  (model): DenseNet(
+    (features): Sequential(
+      (conv0): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+      (norm0): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu0): ReLU(inplace)
+      (pool0): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+      (denseblock1): _DenseBlock(
+        (denselayer1): _DenseLayer(
+          (norm1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(64, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer2): _DenseLayer(
+          (norm1): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(96, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer3): _DenseLayer(
+          (norm1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer4): _DenseLayer(
+          (norm1): BatchNorm2d(160, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(160, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer5): _DenseLayer(
+          (norm1): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(192, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer6): _DenseLayer(
+          (norm1): BatchNorm2d(224, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(224, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+      )
+      (transition1): _Transition(
+        (norm): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace)
+        (conv): Conv2d(256, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (pool): AvgPool2d(kernel_size=2, stride=2, padding=0)
+      )
+      (denseblock2): _DenseBlock(
+        (denselayer1): _DenseLayer(
+          (norm1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer2): _DenseLayer(
+          (norm1): BatchNorm2d(160, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(160, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer3): _DenseLayer(
+          (norm1): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(192, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer4): _DenseLayer(
+          (norm1): BatchNorm2d(224, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(224, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer5): _DenseLayer(
+          (norm1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(256, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer6): _DenseLayer(
+          (norm1): BatchNorm2d(288, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(288, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer7): _DenseLayer(
+          (norm1): BatchNorm2d(320, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(320, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer8): _DenseLayer(
+          (norm1): BatchNorm2d(352, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(352, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer9): _DenseLayer(
+          (norm1): BatchNorm2d(384, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(384, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer10): _DenseLayer(
+          (norm1): BatchNorm2d(416, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(416, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer11): _DenseLayer(
+          (norm1): BatchNorm2d(448, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(448, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer12): _DenseLayer(
+          (norm1): BatchNorm2d(480, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(480, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+      )
+      (transition2): _Transition(
+        (norm): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace)
+        (conv): Conv2d(512, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (pool): AvgPool2d(kernel_size=2, stride=2, padding=0)
+      )
+      (denseblock3): _DenseBlock(
+        (denselayer1): _DenseLayer(
+          (norm1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(256, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer2): _DenseLayer(
+          (norm1): BatchNorm2d(288, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(288, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer3): _DenseLayer(
+          (norm1): BatchNorm2d(320, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(320, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer4): _DenseLayer(
+          (norm1): BatchNorm2d(352, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(352, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer5): _DenseLayer(
+          (norm1): BatchNorm2d(384, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(384, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer6): _DenseLayer(
+          (norm1): BatchNorm2d(416, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(416, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer7): _DenseLayer(
+          (norm1): BatchNorm2d(448, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(448, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer8): _DenseLayer(
+          (norm1): BatchNorm2d(480, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(480, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer9): _DenseLayer(
+          (norm1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer10): _DenseLayer(
+          (norm1): BatchNorm2d(544, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(544, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer11): _DenseLayer(
+          (norm1): BatchNorm2d(576, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(576, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer12): _DenseLayer(
+          (norm1): BatchNorm2d(608, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(608, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer13): _DenseLayer(
+          (norm1): BatchNorm2d(640, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(640, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer14): _DenseLayer(
+          (norm1): BatchNorm2d(672, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(672, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer15): _DenseLayer(
+          (norm1): BatchNorm2d(704, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(704, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer16): _DenseLayer(
+          (norm1): BatchNorm2d(736, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(736, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer17): _DenseLayer(
+          (norm1): BatchNorm2d(768, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(768, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer18): _DenseLayer(
+          (norm1): BatchNorm2d(800, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(800, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer19): _DenseLayer(
+          (norm1): BatchNorm2d(832, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(832, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer20): _DenseLayer(
+          (norm1): BatchNorm2d(864, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(864, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer21): _DenseLayer(
+          (norm1): BatchNorm2d(896, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(896, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer22): _DenseLayer(
+          (norm1): BatchNorm2d(928, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(928, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer23): _DenseLayer(
+          (norm1): BatchNorm2d(960, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(960, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer24): _DenseLayer(
+          (norm1): BatchNorm2d(992, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(992, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+      )
+      (transition3): _Transition(
+        (norm): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace)
+        (conv): Conv2d(1024, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (pool): AvgPool2d(kernel_size=2, stride=2, padding=0)
+      )
+      (denseblock4): _DenseBlock(
+        (denselayer1): _DenseLayer(
+          (norm1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer2): _DenseLayer(
+          (norm1): BatchNorm2d(544, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(544, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer3): _DenseLayer(
+          (norm1): BatchNorm2d(576, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(576, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer4): _DenseLayer(
+          (norm1): BatchNorm2d(608, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(608, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer5): _DenseLayer(
+          (norm1): BatchNorm2d(640, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(640, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer6): _DenseLayer(
+          (norm1): BatchNorm2d(672, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(672, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer7): _DenseLayer(
+          (norm1): BatchNorm2d(704, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(704, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer8): _DenseLayer(
+          (norm1): BatchNorm2d(736, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(736, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer9): _DenseLayer(
+          (norm1): BatchNorm2d(768, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(768, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer10): _DenseLayer(
+          (norm1): BatchNorm2d(800, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(800, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer11): _DenseLayer(
+          (norm1): BatchNorm2d(832, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(832, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer12): _DenseLayer(
+          (norm1): BatchNorm2d(864, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(864, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer13): _DenseLayer(
+          (norm1): BatchNorm2d(896, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(896, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer14): _DenseLayer(
+          (norm1): BatchNorm2d(928, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(928, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer15): _DenseLayer(
+          (norm1): BatchNorm2d(960, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(960, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (denselayer16): _DenseLayer(
+          (norm1): BatchNorm2d(992, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu1): ReLU(inplace)
+          (conv1): Conv2d(992, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu2): ReLU(inplace)
+          (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+      )
+      (norm5): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))
+    )
+    (classifier): Linear(in_features=1024, out_features=1000, bias=True)
+    (fc): Sequential()
+  )
+  (classifier): ClassBlock(
+    (add_block): Sequential(
+      (0): Linear(in_features=1024, out_features=512, bias=True)
+      (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): LeakyReLU(negative_slope=0.1)
+      (3): Dropout(p=0.5)
+    )
+    (classifier): Sequential(
+      (0): Linear(in_features=512, out_features=1453, bias=True)
+    )
+  )
+  (classifierage): ClassBlock(
+    (add_block): Sequential(
+      (0): Linear(in_features=1024, out_features=512, bias=True)
+      (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): LeakyReLU(negative_slope=0.1)
+      (3): Dropout(p=0.5)
+    )
+    (classifier): Sequential(
+      (0): Linear(in_features=512, out_features=4, bias=True)
+    )
+  )
+  (classifierbackpack): ClassBlock(
+    (add_block): Sequential(
+      (0): Linear(in_features=1024, out_features=512, bias=True)
+      (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): LeakyReLU(negative_slope=0.1)
+      (3): Dropout(p=0.5)
+    )
+    (classifier): Sequential(
+      (0): Linear(in_features=512, out_features=2, bias=True)
+    )
+  )
+  (classifierbag): ClassBlock(
+    (add_block): Sequential(
+      (0): Linear(in_features=1024, out_features=512, bias=True)
+      (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): LeakyReLU(negative_slope=0.1)
+      (3): Dropout(p=0.5)
+    )
+    (classifier): Sequential(
+      (0): Linear(in_features=512, out_features=2, bias=True)
+    )
+  )
+  (classifierhandbag): ClassBlock(
+    (add_block): Sequential(
+      (0): Linear(in_features=1024, out_features=512, bias=True)
+      (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): LeakyReLU(negative_slope=0.1)
+      (3): Dropout(p=0.5)
+    )
+    (classifier): Sequential(
+      (0): Linear(in_features=512, out_features=2, bias=True)
+    )
+  )
+  (classifierdowncolor): ClassBlock(
+    (add_block): Sequential(
+      (0): Linear(in_features=1024, out_features=512, bias=True)
+      (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): LeakyReLU(negative_slope=0.1)
+      (3): Dropout(p=0.5)
+    )
+    (classifier): Sequential(
+      (0): Linear(in_features=512, out_features=9, bias=True)
+    )
+  )
+  (classifierupcolor): ClassBlock(
+    (add_block): Sequential(
+      (0): Linear(in_features=1024, out_features=512, bias=True)
+      (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): LeakyReLU(negative_slope=0.1)
+      (3): Dropout(p=0.5)
+    )
+    (classifier): Sequential(
+      (0): Linear(in_features=512, out_features=8, bias=True)
+    )
+  )
+  (classifierclothes): ClassBlock(
+    (add_block): Sequential(
+      (0): Linear(in_features=1024, out_features=512, bias=True)
+      (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): LeakyReLU(negative_slope=0.1)
+      (3): Dropout(p=0.5)
+    )
+    (classifier): Sequential(
+      (0): Linear(in_features=512, out_features=2, bias=True)
+    )
+  )
+  (classifierdown): ClassBlock(
+    (add_block): Sequential(
+      (0): Linear(in_features=1024, out_features=512, bias=True)
+      (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): LeakyReLU(negative_slope=0.1)
+      (3): Dropout(p=0.5)
+    )
+    (classifier): Sequential(
+      (0): Linear(in_features=512, out_features=2, bias=True)
+    )
+  )
+  (classifierup): ClassBlock(
+    (add_block): Sequential(
+      (0): Linear(in_features=1024, out_features=512, bias=True)
+      (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): LeakyReLU(negative_slope=0.1)
+      (3): Dropout(p=0.5)
+    )
+    (classifier): Sequential(
+      (0): Linear(in_features=512, out_features=2, bias=True)
+    )
+  )
+  (classifierhair): ClassBlock(
+    (add_block): Sequential(
+      (0): Linear(in_features=1024, out_features=512, bias=True)
+      (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): LeakyReLU(negative_slope=0.1)
+      (3): Dropout(p=0.5)
+    )
+    (classifier): Sequential(
+      (0): Linear(in_features=512, out_features=2, bias=True)
+    )
+  )
+  (classifierhat): ClassBlock(
+    (add_block): Sequential(
+      (0): Linear(in_features=1024, out_features=512, bias=True)
+      (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): LeakyReLU(negative_slope=0.1)
+      (3): Dropout(p=0.5)
+    )
+    (classifier): Sequential(
+      (0): Linear(in_features=512, out_features=2, bias=True)
+    )
+  )
+  (classifiergender): ClassBlock(
+    (add_block): Sequential(
+      (0): Linear(in_features=1024, out_features=512, bias=True)
+      (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): LeakyReLU(negative_slope=0.1)
+      (3): Dropout(p=0.5)
+    )
+    (classifier): Sequential(
+      (0): Linear(in_features=512, out_features=2, bias=True)
+    )
+  )
+  (classifierbackpack_duke): ClassBlock(
+    (add_block): Sequential(
+      (0): Linear(in_features=1024, out_features=512, bias=True)
+      (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): LeakyReLU(negative_slope=0.1)
+      (3): Dropout(p=0.5)
+    )
+    (classifier): Sequential(
+      (0): Linear(in_features=512, out_features=2, bias=True)
+    )
+  )
+  (classifierbag_duke): ClassBlock(
+    (add_block): Sequential(
+      (0): Linear(in_features=1024, out_features=512, bias=True)
+      (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): LeakyReLU(negative_slope=0.1)
+      (3): Dropout(p=0.5)
+    )
+    (classifier): Sequential(
+      (0): Linear(in_features=512, out_features=2, bias=True)
+    )
+  )
+  (classifierhandbag_duke): ClassBlock(
+    (add_block): Sequential(
+      (0): Linear(in_features=1024, out_features=512, bias=True)
+      (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): LeakyReLU(negative_slope=0.1)
+      (3): Dropout(p=0.5)
+    )
+    (classifier): Sequential(
+      (0): Linear(in_features=512, out_features=2, bias=True)
+    )
+  )
+  (classifierboots_duke): ClassBlock(
+    (add_block): Sequential(
+      (0): Linear(in_features=1024, out_features=512, bias=True)
+      (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): LeakyReLU(negative_slope=0.1)
+      (3): Dropout(p=0.5)
+    )
+    (classifier): Sequential(
+      (0): Linear(in_features=512, out_features=2, bias=True)
+    )
+  )
+  (classifiergender_duke): ClassBlock(
+    (add_block): Sequential(
+      (0): Linear(in_features=1024, out_features=512, bias=True)
+      (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): LeakyReLU(negative_slope=0.1)
+      (3): Dropout(p=0.5)
+    )
+    (classifier): Sequential(
+      (0): Linear(in_features=512, out_features=2, bias=True)
+    )
+  )
+  (classifierhat_duke): ClassBlock(
+    (add_block): Sequential(
+      (0): Linear(in_features=1024, out_features=512, bias=True)
+      (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): LeakyReLU(negative_slope=0.1)
+      (3): Dropout(p=0.5)
+    )
+    (classifier): Sequential(
+      (0): Linear(in_features=512, out_features=2, bias=True)
+    )
+  )
+  (classifiershoes_duke): ClassBlock(
+    (add_block): Sequential(
+      (0): Linear(in_features=1024, out_features=512, bias=True)
+      (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): LeakyReLU(negative_slope=0.1)
+      (3): Dropout(p=0.5)
+    )
+    (classifier): Sequential(
+      (0): Linear(in_features=512, out_features=2, bias=True)
+    )
+  )
+  (classifiertop_duke): ClassBlock(
+    (add_block): Sequential(
+      (0): Linear(in_features=1024, out_features=512, bias=True)
+      (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): LeakyReLU(negative_slope=0.1)
+      (3): Dropout(p=0.5)
+    )
+    (classifier): Sequential(
+      (0): Linear(in_features=512, out_features=2, bias=True)
+    )
+  )
+  (classifierdowncolor_duke): ClassBlock(
+    (add_block): Sequential(
+      (0): Linear(in_features=1024, out_features=512, bias=True)
+      (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): LeakyReLU(negative_slope=0.1)
+      (3): Dropout(p=0.5)
+    )
+    (classifier): Sequential(
+      (0): Linear(in_features=512, out_features=7, bias=True)
+    )
+  )
+  (classifierupcolor_duke): ClassBlock(
+    (add_block): Sequential(
+      (0): Linear(in_features=1024, out_features=512, bias=True)
+      (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): LeakyReLU(negative_slope=0.1)
+      (3): Dropout(p=0.5)
+    )
+    (classifier): Sequential(
+      (0): Linear(in_features=512, out_features=8, bias=True)
+    )
+  )
+)
+/opt/anaconda3/lib/python3.7/site-packages/torchvision-0.2.1-py3.7.egg/torchvision/models/densenet.py:212: UserWarning: nn.init.kaiming_normal is now deprecated in favor of nn.init.kaiming_normal_.
+/home/janardhan/AI_Person_ReID/Person_reID_baseline_pytorch-master/model.py:14: UserWarning: nn.init.kaiming_normal is now deprecated in favor of nn.init.kaiming_normal_.
+  init.kaiming_normal(m.weight.data, a=0, mode='fan_out')
+/home/janardhan/AI_Person_ReID/Person_reID_baseline_pytorch-master/model.py:15: UserWarning: nn.init.constant is now deprecated in favor of nn.init.constant_.
+  init.constant(m.bias.data, 0.0)
+/home/janardhan/AI_Person_ReID/Person_reID_baseline_pytorch-master/model.py:17: UserWarning: nn.init.normal is now deprecated in favor of nn.init.normal_.
+  init.normal(m.weight.data, 1.0, 0.02)
+/home/janardhan/AI_Person_ReID/Person_reID_baseline_pytorch-master/model.py:18: UserWarning: nn.init.constant is now deprecated in favor of nn.init.constant_.
+  init.constant(m.bias.data, 0.0)
+/home/janardhan/AI_Person_ReID/Person_reID_baseline_pytorch-master/model.py:23: UserWarning: nn.init.normal is now deprecated in favor of nn.init.normal_.
+  init.normal(m.weight.data, std=0.001)
+/home/janardhan/AI_Person_ReID/Person_reID_baseline_pytorch-master/model.py:24: UserWarning: nn.init.constant is now deprecated in favor of nn.init.constant_.
+  init.constant(m.bias.data, 0.0)
+0.6621401309967041
+--------------attr_data.shape-----------------
+torch.Size([1453, 22])
+-----class_size---------- 1453
+checking model folder------------------- ./model/mduke_attr_aft_all
+False
+creating model folder-------------------
+Epoch 0/69
+----------
+train Loss: 4.6985 Attr Loss: 11.2445 Acc: 0.2158
+attribute accuracies
+[0.34122478 0.80582039 0.8853062  0.94543831 0.60553473 0.5503303
+ 0.38075344 0.75382967 0.41335476 0.84395644 0.98821639 0.76204249
+ 0.59446527 0.89998215 0.97507588 0.83899304 0.69141225 0.8903053
+ 0.91415819 0.50865917 0.68784146 0.71283699]
+val Loss: 2.8427 Attr Loss: 9.1501 Acc: 0.3944
+attribute accuracies
+[0.38816242 0.76600138 0.84652443 0.9119064  0.61871989 0.62491397
+ 0.449415   0.78389539 0.47763248 0.8348245  0.95526497 0.75086029
+ 0.61871989 0.89332416 0.94838266 0.81693049 0.72883689 0.89676531
+ 0.89883001 0.4604267  0.70061941 0.71988988]
+Epoch 1/69
+----------
+train Loss: 2.1850 Attr Loss: 8.8270 Acc: 0.5249
+attribute accuracies
+[0.34708088 0.792787   0.86148902 0.94650955 0.56857704 0.58228888
+ 0.40521335 0.74183182 0.41285485 0.81367613 0.98896626 0.71522942
+ 0.64642028 0.90183896 0.97539725 0.85399036 0.74036779 0.90323157
+ 0.916015   0.51530084 0.67052312 0.70287449]
+val Loss: 1.5469 Attr Loss: 8.0363 Acc: 0.6456
+attribute accuracies
+[0.39710943 0.80454233 0.83069511 0.91259463 0.61527873 0.59600826
+ 0.45285616 0.79559532 0.47212663 0.79421886 0.95526497 0.74604267
+ 0.68685478 0.89607708 0.94907089 0.8238128  0.69236063 0.90708878
+ 0.90433586 0.53682037 0.66483138 0.67997247]
+Epoch 2/69
+----------
+train Loss: 1.4879 Attr Loss: 8.0983 Acc: 0.6590
+attribute accuracies
+[0.35083021 0.80935547 0.85181218 0.94661668 0.59596501 0.56232816
+ 0.41660418 0.70583824 0.41299768 0.81813962 0.98910909 0.7164792
+ 0.66534547 0.9047313  0.97543296 0.8609534  0.74529548 0.91758615
+ 0.91722907 0.51662203 0.66713087 0.7232637 ]
+val Loss: 1.1454 Attr Loss: 7.5829 Acc: 0.7164
+attribute accuracies
+[0.39848589 0.76737784 0.82725396 0.91052994 0.60908465 0.63248451
+ 0.47212663 0.70887818 0.47487956 0.79766001 0.9559532  0.72608396
+ 0.61252581 0.89194769 0.94907089 0.80591879 0.7047488  0.91672402
+ 0.91259463 0.46799725 0.60839642 0.70750172]
+Epoch 3/69
+----------
+train Loss: 1.1687 Attr Loss: 7.6510 Acc: 0.7328
+attribute accuracies
+[0.35654347 0.82413855 0.85084806 0.94683092 0.60014283 0.56757722
+ 0.42520978 0.71580075 0.41299768 0.81638993 0.98896626 0.7210141
+ 0.6722371  0.90883771 0.97543296 0.86630959 0.75825745 0.9227995
+ 0.9209784  0.52419211 0.66955901 0.73261918]
+val Loss: 1.2065 Attr Loss: 7.4046 Acc: 0.7041
+attribute accuracies
+[0.41225052 0.81211287 0.82450103 0.91328286 0.62904336 0.61114935
+ 0.47556779 0.69442533 0.47625602 0.80247763 0.95526497 0.75430145
+ 0.75567791 0.88644184 0.94838266 0.82725396 0.7136958  0.89194769
+ 0.90433586 0.62422574 0.65657261 0.71782519]
+Epoch 4/69
+----------
+train Loss: 0.9984 Attr Loss: 7.3014 Acc: 0.7738
+attribute accuracies
+[0.35975719 0.817604   0.85366899 0.94715229 0.59567934 0.56514908
+ 0.4343153  0.69509016 0.41342617 0.80864131 0.98900196 0.70794501
+ 0.67234422 0.90933762 0.97546867 0.86934476 0.77014819 0.91815747
+ 0.92162114 0.52719157 0.66723799 0.73797536]
+val Loss: 0.7769 Attr Loss: 6.9490 Acc: 0.7990
+attribute accuracies
+[0.41293875 0.80935994 0.82518926 0.91534756 0.60701996 0.59669649
+ 0.50860289 0.69993118 0.47281487 0.74741913 0.95526497 0.7047488
+ 0.65657261 0.88919477 0.94907089 0.83688919 0.71438403 0.91328286
+ 0.89607708 0.56985547 0.64900206 0.6937371 ]
+Epoch 5/69
+----------
+train Loss: 0.9043 Attr Loss: 7.0890 Acc: 0.7959
+attribute accuracies
+[0.36157829 0.81963935 0.85391894 0.947188   0.59260846 0.55818604
+ 0.44613462 0.68266381 0.41346188 0.80149973 0.98910909 0.7200857
+ 0.67184431 0.91055169 0.97546867 0.87234422 0.77628995 0.92454919
+ 0.91672916 0.52383503 0.66341725 0.72662025]
+val Loss: 0.6775 Attr Loss: 6.8212 Acc: 0.8231
+attribute accuracies
+[0.41569167 0.80523056 0.82312457 0.91259463 0.53337922 0.55127323
+ 0.48038541 0.69580179 0.47419133 0.80247763 0.95526497 0.73296628
+ 0.6035788  0.89745354 0.94838266 0.80867171 0.75636614 0.90640055
+ 0.90020647 0.50172058 0.63041982 0.70956641]
+Epoch 6/69
+----------
+train Loss: 0.8262 Attr Loss: 6.9004 Acc: 0.8112
+attribute accuracies
+[0.36650598 0.80371362 0.84420639 0.94708088 0.58814497 0.54440279
+ 0.44667024 0.69023389 0.41356901 0.80214247 0.9891805  0.72644171
+ 0.69426888 0.90823067 0.97568291 0.85898947 0.77300482 0.92029995
+ 0.91544367 0.52354937 0.66395287 0.71665774]
+val Loss: 0.7170 Attr Loss: 6.8076 Acc: 0.8204
+attribute accuracies
+[0.41982106 0.78527185 0.79766001 0.90984171 0.57742602 0.55471438
+ 0.51410874 0.69029594 0.47487956 0.7487956  0.95526497 0.71300757
+ 0.68960771 0.89125946 0.94838266 0.86166552 0.7467309  0.90915348
+ 0.88093599 0.58499656 0.59119064 0.66896077]
+Epoch 7/69
+----------
+train Loss: 0.7766 Attr Loss: 6.7797 Acc: 0.8237
+attribute accuracies
+[0.36639886 0.80424924 0.83956436 0.94775933 0.57796822 0.53786824
+ 0.45873951 0.69384039 0.41385467 0.79475094 0.98900196 0.73108374
+ 0.68887699 0.90815926 0.97546867 0.86052491 0.76936261 0.91894305
+ 0.91051598 0.52440636 0.64856276 0.70948045]
+val Loss: 0.6495 Attr Loss: 6.7058 Acc: 0.8348
+attribute accuracies
+[0.41706813 0.76531315 0.81968341 0.91328286 0.56022023 0.55884377
+ 0.5175499  0.67309016 0.47900895 0.71300757 0.95526497 0.68960771
+ 0.63179628 0.88506538 0.94975912 0.82037164 0.69442533 0.90227116
+ 0.86854783 0.53888507 0.57742602 0.68685478]
+Epoch 8/69
+----------
+train Loss: 0.7214 Attr Loss: 6.6919 Acc: 0.8382
+attribute accuracies
+[0.36979111 0.79578647 0.83781468 0.94704517 0.58189609 0.52454919
+ 0.47455811 0.68355651 0.41471166 0.78671666 0.98896626 0.73369041
+ 0.69912516 0.90526692 0.97550437 0.8550973  0.77689698 0.90865917
+ 0.90983753 0.51712194 0.64224246 0.70105338]
+val Loss: 0.5942 Attr Loss: 6.6441 Acc: 0.8438
+attribute accuracies
+[0.43014453 0.78596008 0.77150723 0.90984171 0.56090847 0.60151411
+ 0.50172058 0.73296628 0.47556779 0.78045423 0.95664143 0.72608396
+ 0.69580179 0.86097729 0.94907089 0.83895389 0.74604267 0.89332416
+ 0.87474191 0.53475568 0.53613214 0.61321404]
+Epoch 9/69
+----------
+train Loss: 0.7129 Attr Loss: 6.6230 Acc: 0.8393
+attribute accuracies
+[0.36982682 0.79260846 0.83331548 0.9449384  0.57639707 0.52394215
+ 0.48844849 0.67877165 0.41496161 0.7805749  0.98889484 0.72565613
+ 0.69883949 0.8966256  0.97546867 0.84884842 0.76414926 0.90155329
+ 0.90333869 0.51944296 0.64538475 0.68644885]
+val Loss: 0.7123 Attr Loss: 6.8114 Acc: 0.8094
+attribute accuracies
+[0.42670337 0.77701308 0.81624226 0.90777701 0.64074329 0.60908465
+ 0.51479697 0.73847213 0.47763248 0.77150723 0.9559532  0.76187199
+ 0.69236063 0.87267722 0.94907089 0.80798348 0.67033723 0.87680661
+ 0.83551273 0.58843772 0.63041982 0.65794907]
+Epoch 10/69
+----------
+train Loss: 0.6859 Attr Loss: 6.5605 Acc: 0.8458
+attribute accuracies
+[0.372005   0.78964471 0.82638814 0.94351009 0.57239779 0.52372791
+ 0.48244956 0.69112658 0.41464024 0.78700232 0.98893055 0.72940546
+ 0.69730405 0.89509016 0.97543296 0.84795572 0.76611319 0.89894662
+ 0.90180325 0.5200857  0.64824139 0.69048384]
+val Loss: 0.6355 Attr Loss: 6.5018 Acc: 0.8390
+attribute accuracies
+[0.41982106 0.78527185 0.80110117 0.90158293 0.52443221 0.55746731
+ 0.50997935 0.7247075  0.4735031  0.79008947 0.9559532  0.73227805
+ 0.64831383 0.88300069 0.95044735 0.78802478 0.75911906 0.8458362
+ 0.88644184 0.45836201 0.58499656 0.67997247]
+Epoch 11/69
+----------
+train Loss: 0.6643 Attr Loss: 6.5071 Acc: 0.8507
+attribute accuracies
+[0.37186217 0.77761114 0.81699696 0.94326013 0.58032494 0.51944296
+ 0.49194787 0.6893769  0.414426   0.78439564 0.98893055 0.72108552
+ 0.70423139 0.88991252 0.97550437 0.84645599 0.76818425 0.89291198
+ 0.89994644 0.52412069 0.65120514 0.68419925]
+val Loss: 0.5227 Attr Loss: 6.2997 Acc: 0.8624
+attribute accuracies
+[0.42670337 0.78596008 0.76806607 0.90571232 0.5836201  0.55884377
+ 0.52443221 0.68410186 0.47900895 0.73847213 0.95664143 0.67446662
+ 0.68479009 0.85753613 0.94838266 0.75911906 0.72401927 0.87749484
+ 0.8678596  0.55471438 0.61734343 0.66207846]
+Epoch 12/69
+----------
+train Loss: 0.6311 Attr Loss: 6.4983 Acc: 0.8603
+attribute accuracies
+[0.37150509 0.78336011 0.81860382 0.94279593 0.57493305 0.53144081
+ 0.49737547 0.6952687  0.41389038 0.77421889 0.98900196 0.72083557
+ 0.7042671  0.88348509 0.97543296 0.84534904 0.76607749 0.89384039
+ 0.89369755 0.52690591 0.64816997 0.69041243]
+val Loss: 0.5462 Attr Loss: 6.4477 Acc: 0.8589
+attribute accuracies
+[0.43289745 0.77013076 0.76531315 0.90571232 0.54507915 0.50103235
+ 0.56503785 0.669649   0.47900895 0.73984859 0.9559532  0.660702
+ 0.69511356 0.86373021 0.94907089 0.79834825 0.68960771 0.90227116
+ 0.85547144 0.55609085 0.57949071 0.60289057]
+Epoch 13/69
+----------
+train Loss: 0.6160 Attr Loss: 6.4267 Acc: 0.8662
+attribute accuracies
+[0.37389752 0.77664703 0.81888948 0.94408141 0.57939654 0.52651312
+ 0.49869666 0.68855562 0.41367613 0.77900375 0.98896626 0.7182646
+ 0.71369398 0.88552044 0.97536154 0.83995715 0.77286199 0.88780575
+ 0.89351901 0.5246206  0.65127656 0.69862525]
+val Loss: 0.5307 Attr Loss: 6.4567 Acc: 0.8555
+attribute accuracies
+[0.41431521 0.78458362 0.77288369 0.90020647 0.56847901 0.60908465
+ 0.60839642 0.61734343 0.47487956 0.72539573 0.95526497 0.67033723
+ 0.70337233 0.81555403 0.94838266 0.79421886 0.65657261 0.84033035
+ 0.85271851 0.47900895 0.57742602 0.66689608]
+Epoch 14/69
+----------
+train Loss: 0.5948 Attr Loss: 6.3887 Acc: 0.8713
+attribute accuracies
+[0.37325478 0.78143189 0.8243885  0.94411712 0.57586145 0.52897697
+ 0.4948045  0.69444742 0.41317622 0.7837529  0.98893055 0.72647741
+ 0.70862346 0.87905731 0.97543296 0.84367077 0.77429031 0.87895019
+ 0.89098375 0.52765578 0.65031244 0.70401714]
+val Loss: 0.5918 Attr Loss: 6.6163 Acc: 0.8610
+attribute accuracies
+[0.43083276 0.78871301 0.80247763 0.90364763 0.55127323 0.52030282
+ 0.54232622 0.7377839  0.47900895 0.74260151 0.95526497 0.69649002
+ 0.70543703 0.83895389 0.94838266 0.84170681 0.72814866 0.86097729
+ 0.84033035 0.55746731 0.58843772 0.70130764]
+Epoch 15/69
+----------
+train Loss: 0.5906 Attr Loss: 6.3429 Acc: 0.8717
+attribute accuracies
+[0.37411177 0.77589716 0.82371005 0.94500982 0.59410819 0.533619
+ 0.50055347 0.68477058 0.41331905 0.76461346 0.98893055 0.72044278
+ 0.71626495 0.87816461 0.97543296 0.84317086 0.77007677 0.87795037
+ 0.89337618 0.52936976 0.64620603 0.70873058]
+val Loss: 0.5854 Attr Loss: 6.5863 Acc: 0.8500
+attribute accuracies
+[0.42876807 0.81004818 0.76187199 0.91121817 0.63110805 0.59944942
+ 0.55471438 0.69029594 0.47763248 0.66620785 0.95526497 0.62697866
+ 0.69511356 0.85478321 0.94838266 0.76531315 0.63523744 0.88644184
+ 0.86510668 0.4053682  0.59325533 0.63523744]
+Epoch 16/69
+----------
+train Loss: 0.5810 Attr Loss: 6.3544 Acc: 0.8760
+attribute accuracies
+[0.37379039 0.78078914 0.82128191 0.94593823 0.59375112 0.53565435
+ 0.50230316 0.68202107 0.41306909 0.77414747 0.98893055 0.71622924
+ 0.71198    0.88162828 0.97546867 0.84684878 0.76572041 0.8767363
+ 0.8916265  0.52494197 0.65249063 0.7155865 ]
+val Loss: 0.5438 Attr Loss: 6.3163 Acc: 0.8630
+attribute accuracies
+[0.42395045 0.73503097 0.80523056 0.90158293 0.58637302 0.55540262
+ 0.56641432 0.64693737 0.47625602 0.71644873 0.95526497 0.65726084
+ 0.64418445 0.85960083 0.94907089 0.82450103 0.70406056 0.88437715
+ 0.83069511 0.50722643 0.61183758 0.69029594]
+Epoch 17/69
+----------
+train Loss: 0.5658 Attr Loss: 6.2999 Acc: 0.8788
+attribute accuracies
+[0.37439743 0.77907517 0.82685235 0.94658097 0.59193001 0.53215497
+ 0.50091055 0.68084271 0.41285485 0.77939654 0.98893055 0.72047849
+ 0.71401535 0.88362792 0.97539725 0.8492055  0.76693448 0.87455811
+ 0.89044813 0.52783432 0.6460632  0.71719336]
+val Loss: 0.5115 Attr Loss: 6.3679 Acc: 0.8706
+attribute accuracies
+[0.43289745 0.81830695 0.77426015 0.90915348 0.54439092 0.52167928
+ 0.52993806 0.75086029 0.47900895 0.770819   0.95526497 0.6937371
+ 0.62629043 0.85753613 0.94975912 0.770819   0.67721955 0.83895389
+ 0.87955953 0.63179628 0.59050241 0.660702  ]
+Epoch 18/69
+----------
+train Loss: 0.5516 Attr Loss: 6.2616 Acc: 0.8813
+attribute accuracies
+[0.37389752 0.78400286 0.83245849 0.94429566 0.59614355 0.53054812
+ 0.50101768 0.68444921 0.41289056 0.77846813 0.98900196 0.72122835
+ 0.71851455 0.87666488 0.97543296 0.85041957 0.76532762 0.87277272
+ 0.89291198 0.52662025 0.65602571 0.7272987 ]
+val Loss: 0.5111 Attr Loss: 6.2925 Acc: 0.8706
+attribute accuracies
+[0.42532691 0.76324845 0.77770131 0.90915348 0.61527873 0.54232622
+ 0.51617343 0.68341363 0.47625602 0.72608396 0.9559532  0.67790778
+ 0.65244322 0.84239504 0.94975912 0.81761872 0.74466621 0.82725396
+ 0.86028906 0.56228493 0.54645561 0.71231934]
+Epoch 19/69
+----------
+train Loss: 0.5399 Attr Loss: 6.2300 Acc: 0.8857
+attribute accuracies
+[0.37450455 0.77946795 0.83392251 0.94572398 0.59942867 0.52633458
+ 0.49419746 0.68066417 0.41303339 0.77468309 0.98893055 0.7183003
+ 0.71676486 0.87680771 0.97539725 0.85302625 0.77164792 0.87477236
+ 0.89398322 0.52676308 0.65391894 0.72051419]
+val Loss: 0.5183 Attr Loss: 6.2644 Acc: 0.8706
+attribute accuracies
+[0.42257398 0.78045423 0.71300757 0.90571232 0.62422574 0.56228493
+ 0.54026153 0.69717825 0.47281487 0.7907777  0.9559532  0.76324845
+ 0.63386098 0.84790089 0.94907089 0.72333104 0.63041982 0.85478321
+ 0.85960083 0.49759119 0.64143152 0.73227805]
+Epoch 20/69
+----------
+train Loss: 0.5525 Attr Loss: 6.2206 Acc: 0.8814
+attribute accuracies
+[0.37625424 0.78168184 0.82067488 0.94622389 0.59785753 0.53401178
+ 0.49801821 0.67784324 0.4131048  0.77671844 0.98896626 0.71537225
+ 0.70919479 0.87912873 0.97546867 0.84988395 0.76354222 0.88677022
+ 0.89441171 0.5345474  0.65752544 0.72672737]
+val Loss: 0.5291 Attr Loss: 6.3698 Acc: 0.8596
+attribute accuracies
+[0.43014453 0.77357192 0.81830695 0.9119064  0.55471438 0.54576738
+ 0.54714384 0.66001376 0.47556779 0.75086029 0.95664143 0.66620785
+ 0.61803166 0.85134205 0.94907089 0.82037164 0.70061941 0.88368892
+ 0.85134205 0.49483827 0.59119064 0.74053682]
+Epoch 21/69
+----------
+train Loss: 0.5453 Attr Loss: 6.1912 Acc: 0.8833
+attribute accuracies
+[0.3747188  0.78671666 0.82420996 0.9467238  0.60253526 0.52897697
+ 0.49155508 0.67598643 0.41281914 0.78296733 0.98896626 0.72365649
+ 0.7151223  0.87841457 0.97543296 0.85066952 0.76493483 0.88552044
+ 0.8920907  0.52519193 0.65706124 0.7313694 ]
+val Loss: 0.5146 Attr Loss: 6.3315 Acc: 0.8624
+attribute accuracies
+[0.42601514 0.74328975 0.8017894  0.91672402 0.5615967  0.54370268
+ 0.55609085 0.68754301 0.47419133 0.74260151 0.95526497 0.68960771
+ 0.63799036 0.86441844 0.94975912 0.79834825 0.6386786  0.84858913
+ 0.81348933 0.6145905  0.58843772 0.70956641]
+Epoch 22/69
+----------
+train Loss: 0.5235 Attr Loss: 6.1665 Acc: 0.8881
+attribute accuracies
+[0.37543296 0.78118193 0.83799322 0.94600964 0.60085699 0.53165506
+ 0.48994822 0.68916265 0.41321193 0.78353865 0.98893055 0.72708445
+ 0.71637208 0.87552223 0.97543296 0.85252633 0.76368506 0.88259239
+ 0.88934119 0.5282271  0.65698982 0.73576147]
+val Loss: 0.5126 Attr Loss: 6.1583 Acc: 0.8596
+attribute accuracies
+[0.42532691 0.75705437 0.76944253 0.90708878 0.59669649 0.52787337
+ 0.50240881 0.67721955 0.47212663 0.76324845 0.9559532  0.72539573
+ 0.62629043 0.86648314 0.94907089 0.76531315 0.68479009 0.88300069
+ 0.85547144 0.44872677 0.5946318  0.71851342]
+Epoch 23/69
+----------
+train Loss: 0.5195 Attr Loss: 6.1103 Acc: 0.8902
+attribute accuracies
+[0.37596858 0.78428852 0.83128013 0.94468845 0.60939118 0.53915372
+ 0.49387609 0.68791287 0.41292626 0.78757365 0.98893055 0.72365649
+ 0.71644349 0.88077129 0.97539725 0.84809855 0.7638993  0.88730584
+ 0.8903053  0.52376361 0.65638279 0.7386181 ]
+val Loss: 0.5018 Attr Loss: 6.2293 Acc: 0.8672
+attribute accuracies
+[0.43014453 0.72195458 0.81968341 0.90915348 0.64143152 0.56503785
+ 0.55196146 0.66414315 0.47832072 0.75430145 0.95526497 0.7047488
+ 0.66345492 0.82931865 0.94975912 0.78940124 0.69236063 0.86579491
+ 0.8568479  0.49759119 0.59119064 0.68134893]
+Epoch 24/69
+----------
+train Loss: 0.5092 Attr Loss: 6.0877 Acc: 0.8940
+attribute accuracies
+[0.3760757  0.79750045 0.82824496 0.9462596  0.60517765 0.53283342
+ 0.49194787 0.68559186 0.41321193 0.78560971 0.98896626 0.72072844
+ 0.71633637 0.87966435 0.97539725 0.85138368 0.76654169 0.8880557
+ 0.89505445 0.52719157 0.66077486 0.73472594]
+val Loss: 0.4692 Attr Loss: 6.1672 Acc: 0.8823
+attribute accuracies
+[0.4184446  0.78940124 0.80247763 0.90158293 0.62422574 0.52236752
+ 0.53613214 0.68823125 0.4714384  0.75498968 0.95526497 0.72608396
+ 0.67997247 0.85822436 0.94907089 0.82312457 0.67584308 0.84514797
+ 0.86097729 0.53200275 0.58774948 0.66551961]
+Epoch 25/69
+----------
+train Loss: 0.4900 Attr Loss: 6.0313 Acc: 0.8997
+attribute accuracies
+[0.37678986 0.79060882 0.82853062 0.94390287 0.60428495 0.53358329
+ 0.49973219 0.67798607 0.41281914 0.78082485 0.98893055 0.7210141
+ 0.71772898 0.87873594 0.97539725 0.85813248 0.77068381 0.88684164
+ 0.89251919 0.52358507 0.66016783 0.73304767]
+val Loss: 0.4836 Attr Loss: 6.1186 Acc: 0.8713
+attribute accuracies
+[0.41913283 0.7907777  0.78458362 0.91121817 0.65037853 0.52167928
+ 0.51273228 0.63041982 0.47625602 0.82243634 0.95526497 0.75017206
+ 0.60151411 0.84858913 0.94838266 0.83964212 0.75361321 0.85891259
+ 0.83895389 0.53200275 0.58981418 0.67859601]
+Epoch 26/69
+----------
+train Loss: 0.4990 Attr Loss: 6.0042 Acc: 0.8949
+attribute accuracies
+[0.3778968  0.79400107 0.82399572 0.94304588 0.60210677 0.53540439
+ 0.48962685 0.67330834 0.41314051 0.78353865 0.98893055 0.72222817
+ 0.7182646  0.8754151  0.97550437 0.85720407 0.76979111 0.8835208
+ 0.89473308 0.52362078 0.6550973  0.73890377]
+val Loss: 0.5090 Attr Loss: 6.1333 Acc: 0.8644
+attribute accuracies
+[0.42601514 0.72746043 0.81211287 0.90364763 0.52374398 0.56434962
+ 0.54783207 0.66758431 0.47625602 0.83826566 0.95526497 0.77701308
+ 0.5836201  0.86510668 0.94975912 0.84101858 0.66345492 0.8568479
+ 0.83000688 0.57329663 0.56779078 0.70130764]
+Epoch 27/69
+----------
+train Loss: 0.4930 Attr Loss: 5.9906 Acc: 0.8969
+attribute accuracies
+[0.37893233 0.78753794 0.82649527 0.94218889 0.60546331 0.53179789
+ 0.48762721 0.6780932  0.41314051 0.78264596 0.98893055 0.72644171
+ 0.71490805 0.88123549 0.97539725 0.85563292 0.77082664 0.88402071
+ 0.89294769 0.51844314 0.65449027 0.73369041]
+val Loss: 0.5288 Attr Loss: 6.1089 Acc: 0.8699
+attribute accuracies
+[0.42050929 0.72195458 0.75430145 0.90364763 0.58568479 0.50929112
+ 0.52167928 0.71507226 0.4714384  0.73503097 0.9559532  0.66620785
+ 0.64143152 0.84514797 0.94838266 0.76737784 0.71163111 0.90227116
+ 0.86441844 0.49621473 0.58637302 0.70199587]
+Epoch 28/69
+----------
+train Loss: 0.5082 Attr Loss: 5.9805 Acc: 0.8902
+attribute accuracies
+[0.37775397 0.79043028 0.82860204 0.93990359 0.60207106 0.53051241
+ 0.483985   0.67670059 0.41299768 0.78928763 0.98893055 0.71997858
+ 0.7106231  0.88209248 0.97539725 0.85502589 0.76311373 0.88794858
+ 0.89491162 0.52487056 0.66134619 0.73579718]
+val Loss: 0.4801 Attr Loss: 6.0010 Acc: 0.8796
+attribute accuracies
+[0.42670337 0.74535444 0.80660702 0.90433586 0.63936683 0.54301445
+ 0.52993806 0.7047488  0.47487956 0.7487956  0.9559532  0.72746043
+ 0.6586373  0.86579491 0.95044735 0.73503097 0.69236063 0.86854783
+ 0.86648314 0.52993806 0.60151411 0.70956641]
+Epoch 29/69
+----------
+train Loss: 0.4846 Attr Loss: 5.9309 Acc: 0.8991
+attribute accuracies
+[0.3778968  0.78889484 0.82774505 0.94240314 0.61024817 0.53397608
+ 0.49380468 0.68287806 0.41331905 0.78721657 0.98893055 0.72165685
+ 0.72022853 0.87634351 0.97543296 0.85566863 0.76768434 0.89387609
+ 0.8934476  0.52476344 0.65945367 0.73604713]
+val Loss: 0.5204 Attr Loss: 6.0701 Acc: 0.8720
+attribute accuracies
+[0.4294563  0.73365451 0.83069511 0.89883001 0.6366139  0.50860289
+ 0.53337922 0.69580179 0.47625602 0.76393668 0.95526497 0.69236063
+ 0.7026841  0.84790089 0.94838266 0.81211287 0.69098417 0.85822436
+ 0.85134205 0.50791466 0.63248451 0.71231934]
+Epoch 30/69
+----------
+train Loss: 0.2740 Attr Loss: 5.5032 Acc: 0.9540
+attribute accuracies
+[0.38246742 0.77811105 0.83345831 0.94411712 0.61846099 0.52565613
+ 0.4979825  0.66845206 0.41331905 0.79796465 0.98893055 0.7245849
+ 0.73386895 0.87948581 0.97539725 0.85149081 0.7683985  0.89805392
+ 0.89669702 0.51815747 0.66677379 0.7485449 ]
+val Loss: 0.2654 Attr Loss: 5.4348 Acc: 0.9291
+attribute accuracies
+[0.43496215 0.76324845 0.81486579 0.90227116 0.64349621 0.56503785
+ 0.54507915 0.68134893 0.47487956 0.79146593 0.95664143 0.73296628
+ 0.69442533 0.84721266 0.94838266 0.81830695 0.6916724  0.86441844
+ 0.85822436 0.53475568 0.61321404 0.69717825]
+Epoch 31/69
+----------
+train Loss: 0.1903 Attr Loss: 5.2295 Acc: 0.9730
+attribute accuracies
+[0.38489555 0.7828602  0.83392251 0.94525978 0.61971077 0.53683271
+ 0.50258882 0.67755758 0.41342617 0.80332084 0.98893055 0.73033387
+ 0.73154794 0.87987859 0.97539725 0.85723978 0.7711123  0.8939118
+ 0.89537583 0.52204963 0.66916622 0.74611676]
+val Loss: 0.2426 Attr Loss: 5.3462 Acc: 0.9319
+attribute accuracies
+[0.44115623 0.75086029 0.82037164 0.90708878 0.64624914 0.55884377
+ 0.57811425 0.66414315 0.47900895 0.76737784 0.95526497 0.71851342
+ 0.68960771 0.8458362  0.94838266 0.82794219 0.68547832 0.84858913
+ 0.85615967 0.52718513 0.61734343 0.70130764]
+Epoch 32/69
+----------
+train Loss: 0.1689 Attr Loss: 5.1013 Acc: 0.9784
+attribute accuracies
+[0.38546688 0.77932512 0.83588645 0.94233173 0.62267452 0.53340475
+ 0.5069809  0.67777183 0.41335476 0.8        0.98893055 0.72701303
+ 0.73793965 0.87934297 0.97543296 0.85984646 0.77393323 0.88987681
+ 0.89351901 0.52372791 0.67048741 0.74279593]
+val Loss: 0.2354 Attr Loss: 5.2717 Acc: 0.9374
+attribute accuracies
+[0.43565038 0.74948383 0.80523056 0.90777701 0.61527873 0.56022023
+ 0.56503785 0.64074329 0.47281487 0.7598073  0.9559532  0.71300757
+ 0.69649002 0.83826566 0.94907089 0.84170681 0.70887818 0.86097729
+ 0.8458362  0.54989677 0.60495526 0.69717825]
+Epoch 33/69
+----------
+train Loss: 0.1620 Attr Loss: 4.9958 Acc: 0.9801
+attribute accuracies
+[0.38846635 0.78900196 0.8307088  0.94226031 0.6184967  0.54276022
+ 0.51048027 0.67527227 0.41406892 0.79964292 0.98893055 0.72769148
+ 0.74301018 0.87384396 0.97539725 0.85909659 0.77236208 0.88794858
+ 0.89251919 0.52547759 0.66766649 0.74351009]
+val Loss: 0.2273 Attr Loss: 5.2097 Acc: 0.9381
+attribute accuracies
+[0.43427392 0.76944253 0.80247763 0.90158293 0.61527873 0.55540262
+ 0.57123193 0.65588438 0.47625602 0.76256022 0.9559532  0.71644873
+ 0.68891948 0.84308328 0.94838266 0.82105988 0.70543703 0.85134205
+ 0.84996559 0.54507915 0.61940812 0.70887818]
+Epoch 34/69
+----------
+train Loss: 0.1584 Attr Loss: 4.9559 Acc: 0.9813
+attribute accuracies
+[0.38739511 0.78357436 0.82967327 0.94115337 0.620782   0.54043921
+ 0.5137654  0.67330834 0.41367613 0.79517943 0.98893055 0.72440636
+ 0.74008213 0.87284413 0.97543296 0.85916801 0.77589716 0.8857704
+ 0.8934476  0.51994287 0.67195144 0.7422246 ]
+val Loss: 0.2284 Attr Loss: 5.2167 Acc: 0.9374
+attribute accuracies
+[0.43977977 0.75636614 0.80798348 0.89401239 0.62835513 0.55402615
+ 0.56847901 0.65519615 0.47556779 0.77219546 0.95732966 0.70681349
+ 0.68341363 0.83757743 0.94907089 0.80729525 0.68203716 0.83826566
+ 0.84721266 0.54576738 0.6256022  0.7157605 ]
+Epoch 35/69
+----------
+train Loss: 0.1549 Attr Loss: 4.8860 Acc: 0.9822
+attribute accuracies
+[0.38928763 0.7842171  0.83085163 0.93708266 0.62053205 0.54408141
+ 0.51340832 0.67912873 0.41367613 0.7972862  0.98893055 0.72472773
+ 0.74201036 0.87130869 0.97543296 0.85538297 0.77161221 0.88605606
+ 0.88876986 0.52319229 0.67437958 0.74258168]
+val Loss: 0.2227 Attr Loss: 5.1077 Acc: 0.9374
+attribute accuracies
+[0.44322092 0.76256022 0.80041294 0.89607708 0.63523744 0.54576738
+ 0.56847901 0.67309016 0.47832072 0.75636614 0.9559532  0.68960771
+ 0.68823125 0.83551273 0.94907089 0.79215416 0.67928424 0.85547144
+ 0.85615967 0.54163799 0.61940812 0.68547832]
+Epoch 36/69
+----------
+train Loss: 0.1461 Attr Loss: 4.8114 Acc: 0.9851
+attribute accuracies
+[0.38932334 0.78596679 0.82510266 0.93776111 0.62463846 0.54004642
+ 0.51590787 0.68059275 0.41414033 0.79164435 0.98893055 0.72351366
+ 0.73743974 0.87287984 0.97550437 0.85295483 0.77657561 0.88187824
+ 0.88855562 0.51887163 0.67102303 0.74154615]
+val Loss: 0.2195 Attr Loss: 5.0654 Acc: 0.9408
+attribute accuracies
+[0.44390915 0.75154852 0.81555403 0.90708878 0.64074329 0.57329663
+ 0.56572608 0.67584308 0.47625602 0.77563661 0.9559532  0.70750172
+ 0.69442533 0.82656573 0.94838266 0.81142464 0.69580179 0.86097729
+ 0.84445974 0.5705437  0.6166552  0.70061941]
+Epoch 37/69
+----------
+train Loss: 0.1455 Attr Loss: 4.7489 Acc: 0.9850
+attribute accuracies
+[0.39032316 0.78503839 0.82813783 0.93697554 0.62356722 0.54340296
+ 0.5187288  0.68134262 0.41406892 0.792787   0.98896626 0.72629888
+ 0.7435458  0.87423674 0.97539725 0.85766827 0.77714694 0.88141403
+ 0.88898411 0.52861989 0.67091591 0.74161757]
+val Loss: 0.2121 Attr Loss: 5.0159 Acc: 0.9394
+attribute accuracies
+[0.44184446 0.76600138 0.80935994 0.88781831 0.63386098 0.56228493
+ 0.56847901 0.669649   0.47832072 0.77426015 0.95664143 0.71644873
+ 0.67790778 0.8348245  0.94907089 0.80591879 0.68479009 0.85409498
+ 0.84652443 0.55471438 0.61183758 0.70612526]
+Epoch 38/69
+----------
+train Loss: 0.1413 Attr Loss: 4.7282 Acc: 0.9865
+attribute accuracies
+[0.3905374  0.78332441 0.82263881 0.93469023 0.61885378 0.55111587
+ 0.51669345 0.67780753 0.41456883 0.78710944 0.98893055 0.71583646
+ 0.74290305 0.87023746 0.97543296 0.8532762  0.77536154 0.88584181
+ 0.88855562 0.52608463 0.67116586 0.74297447]
+val Loss: 0.2187 Attr Loss: 4.9884 Acc: 0.9394
+attribute accuracies
+[0.44322092 0.74191328 0.80591879 0.90227116 0.63454921 0.5615967
+ 0.56503785 0.67033723 0.47556779 0.76256022 0.95526497 0.70956641
+ 0.68754301 0.82863042 0.94907089 0.80041294 0.67102546 0.87336545
+ 0.84790089 0.53131452 0.60633173 0.68891948]
+Epoch 39/69
+----------
+train Loss: 0.1428 Attr Loss: 4.6749 Acc: 0.9861
+attribute accuracies
+[0.39114444 0.78303874 0.82131762 0.93311909 0.62317443 0.5539368
+ 0.51847884 0.68048563 0.41474737 0.78753794 0.98893055 0.72297804
+ 0.74379575 0.87141582 0.97539725 0.85227638 0.7724692  0.88552044
+ 0.88802    0.52440636 0.67295126 0.74272451]
+val Loss: 0.2156 Attr Loss: 4.9486 Acc: 0.9387
+attribute accuracies
+[0.44184446 0.7467309  0.80523056 0.89125946 0.6476256  0.56779078
+ 0.5726084  0.66620785 0.47694425 0.77357192 0.9559532  0.7136958
+ 0.69304886 0.83207158 0.94975912 0.80247763 0.69580179 0.85615967
+ 0.84377151 0.54232622 0.6056435  0.6916724 ]
+Epoch 40/69
+----------
+train Loss: 0.1427 Attr Loss: 4.6280 Acc: 0.9867
+attribute accuracies
+[0.39207284 0.78664524 0.82417425 0.92983396 0.62267452 0.55315122
+ 0.51915729 0.67841457 0.41521157 0.78882342 0.98893055 0.7219068
+ 0.74386717 0.87120157 0.97546867 0.85109802 0.77457597 0.88409213
+ 0.88777004 0.52237101 0.67198715 0.74022496]
+val Loss: 0.2263 Attr Loss: 4.9682 Acc: 0.9353
+attribute accuracies
+[0.44390915 0.7577426  0.80867171 0.88919477 0.64143152 0.55815554
+ 0.59119064 0.66345492 0.4735031  0.76118376 0.9559532  0.70956641
+ 0.68960771 0.81624226 0.94838266 0.81899518 0.68754301 0.85134205
+ 0.85547144 0.55609085 0.6276669  0.69511356]
+Epoch 41/69
+----------
+train Loss: 0.1403 Attr Loss: 4.6078 Acc: 0.9874
+attribute accuracies
+[0.39335833 0.78353865 0.81821103 0.93072666 0.62567399 0.55715051
+ 0.52304946 0.68091412 0.41510445 0.78121764 0.98893055 0.7214426
+ 0.74240314 0.86880914 0.97539725 0.8537047  0.77254062 0.88323514
+ 0.88609177 0.51994287 0.67152294 0.74608106]
+val Loss: 0.2150 Attr Loss: 4.9301 Acc: 0.9374
+attribute accuracies
+[0.44528562 0.75843083 0.81693049 0.88850654 0.62284928 0.56985547
+ 0.56916724 0.67928424 0.47900895 0.77013076 0.95526497 0.72264281
+ 0.68134893 0.83826566 0.94907089 0.80935994 0.69993118 0.84377151
+ 0.84996559 0.53613214 0.63179628 0.70681349]
+Epoch 42/69
+----------
+train Loss: 0.1394 Attr Loss: 4.5776 Acc: 0.9875
+attribute accuracies
+[0.39178718 0.78271737 0.82156758 0.92769148 0.62310302 0.55536511
+ 0.5209784  0.68019996 0.41589002 0.7828245  0.98893055 0.72129977
+ 0.74368863 0.86880914 0.97543296 0.84988395 0.77932512 0.88198536
+ 0.88730584 0.52676308 0.67670059 0.74261739]
+val Loss: 0.2117 Attr Loss: 4.8219 Acc: 0.9387
+attribute accuracies
+[0.44322092 0.75361321 0.80591879 0.88368892 0.63110805 0.56366139
+ 0.56090847 0.68203716 0.48107364 0.76531315 0.9559532  0.70406056
+ 0.67721955 0.83413627 0.94838266 0.80110117 0.69580179 0.86648314
+ 0.84445974 0.53406745 0.62078458 0.70681349]
+Epoch 43/69
+----------
+train Loss: 0.1345 Attr Loss: 4.5346 Acc: 0.9889
+attribute accuracies
+[0.39150152 0.78261025 0.81846099 0.92469202 0.62199607 0.5526156
+ 0.52001428 0.67627209 0.41556865 0.78036065 0.98893055 0.71944296
+ 0.74933048 0.86563114 0.97539725 0.8492055  0.77150509 0.87891448
+ 0.88687734 0.52226388 0.6740225  0.74340296]
+val Loss: 0.2172 Attr Loss: 4.8058 Acc: 0.9387
+attribute accuracies
+[0.44390915 0.74466621 0.8017894  0.89332416 0.64074329 0.56503785
+ 0.5726084  0.66483138 0.47900895 0.75292498 0.9559532  0.70130764
+ 0.70130764 0.81899518 0.94838266 0.78733655 0.68685478 0.84445974
+ 0.84721266 0.52718513 0.61596696 0.70406056]
+Epoch 44/69
+----------
+train Loss: 0.1359 Attr Loss: 4.5149 Acc: 0.9889
+attribute accuracies
+[0.39364399 0.78582396 0.81813962 0.92601321 0.62049634 0.55615069
+ 0.52254954 0.67748616 0.41653276 0.78303874 0.98893055 0.72397786
+ 0.74158186 0.86873773 0.97543296 0.85256204 0.77539725 0.87959293
+ 0.88591323 0.52836993 0.67555794 0.74404571]
+val Loss: 0.2171 Attr Loss: 4.7684 Acc: 0.9394
+attribute accuracies
+[0.44115623 0.74260151 0.80316586 0.89470062 0.66139023 0.56228493
+ 0.58912595 0.67033723 0.47763248 0.75430145 0.95526497 0.71438403
+ 0.69580179 0.80454233 0.95044735 0.80523056 0.68616655 0.85822436
+ 0.83964212 0.52924983 0.6256022  0.70750172]
+Epoch 45/69
+----------
+train Loss: 0.1373 Attr Loss: 4.4685 Acc: 0.9885
+attribute accuracies
+[0.3932155  0.78407427 0.81863953 0.9236922  0.62306731 0.55411534
+ 0.526406   0.68234244 0.41696126 0.775183   0.98893055 0.71976433
+ 0.74236743 0.86752366 0.97543296 0.84902696 0.779218   0.88166399
+ 0.88619889 0.52108552 0.67227281 0.7449027 ]
+val Loss: 0.2128 Attr Loss: 4.7280 Acc: 0.9394
+attribute accuracies
+[0.44115623 0.77013076 0.79903648 0.89125946 0.660702   0.56503785
+ 0.58293187 0.67928424 0.47625602 0.75636614 0.95526497 0.70818995
+ 0.68891948 0.82105988 0.94975912 0.79697178 0.6916724  0.85203028
+ 0.83895389 0.54370268 0.62284928 0.67584308]
+Epoch 46/69
+----------
+train Loss: 0.1353 Attr Loss: 4.4394 Acc: 0.9896
+attribute accuracies
+[0.39364399 0.78318157 0.81756829 0.92104981 0.6230316  0.55457954
+ 0.52526335 0.68284235 0.4171755  0.77882521 0.98893055 0.7205499
+ 0.74915194 0.86477415 0.97539725 0.85120514 0.77318336 0.87884306
+ 0.88705588 0.52447777 0.67616497 0.74533119]
+val Loss: 0.2200 Attr Loss: 4.7489 Acc: 0.9381
+attribute accuracies
+[0.44184446 0.75843083 0.80591879 0.87198899 0.64211975 0.5726084
+ 0.56022023 0.6937371  0.47625602 0.75361321 0.95526497 0.69855471
+ 0.70130764 0.82518926 0.94838266 0.79421886 0.68203716 0.84996559
+ 0.82312457 0.54026153 0.6035788  0.70543703]
+Epoch 47/69
+----------
+train Loss: 0.1388 Attr Loss: 4.4198 Acc: 0.9883
+attribute accuracies
+[0.39396536 0.782396   0.81589002 0.91908588 0.62360293 0.55572219
+ 0.52690591 0.68469916 0.41678272 0.77768256 0.98893055 0.72269238
+ 0.74450991 0.86513123 0.97546867 0.85038386 0.77493305 0.88073558
+ 0.88402071 0.52154972 0.67280843 0.74279593]
+val Loss: 0.2211 Attr Loss: 4.6928 Acc: 0.9387
+attribute accuracies
+[0.44803854 0.75636614 0.80454233 0.88506538 0.64900206 0.56228493
+ 0.58086717 0.66139023 0.48038541 0.76737784 0.9559532  0.71163111
+ 0.69304886 0.81693049 0.94975912 0.7928424  0.68616655 0.8458362
+ 0.83620096 0.5285616  0.6166552  0.70337233]
+Epoch 48/69
+----------
+train Loss: 0.1356 Attr Loss: 4.3966 Acc: 0.9896
+attribute accuracies
+[0.39375112 0.78868059 0.81596144 0.91940725 0.62156758 0.55693626
+ 0.53040528 0.68548473 0.41753258 0.77678986 0.98896626 0.72247813
+ 0.74561685 0.86923764 0.97539725 0.85224067 0.77411177 0.87920014
+ 0.88252098 0.52472773 0.67741475 0.74586681]
+val Loss: 0.2237 Attr Loss: 4.6961 Acc: 0.9374
+attribute accuracies
+[0.44459738 0.74604267 0.80660702 0.88231246 0.66414315 0.57123193
+ 0.57123193 0.66896077 0.47832072 0.78114246 0.9559532  0.73158981
+ 0.66620785 0.82243634 0.94838266 0.79008947 0.68960771 0.86028906
+ 0.83964212 0.53682037 0.63248451 0.6916724 ]
+Epoch 49/69
+----------
+train Loss: 0.1363 Attr Loss: 4.3731 Acc: 0.9899
+attribute accuracies
+[0.39453669 0.78593108 0.81471166 0.91487234 0.62149616 0.55607927
+ 0.52826281 0.6790216  0.41771112 0.77943224 0.98893055 0.723228
+ 0.74654526 0.86630959 0.97539725 0.84870559 0.77543296 0.88027138
+ 0.88491341 0.52337083 0.67759329 0.7462953 ]
+val Loss: 0.2205 Attr Loss: 4.6984 Acc: 0.9401
+attribute accuracies
+[0.44666208 0.73984859 0.79903648 0.87818307 0.6366139  0.56297316
+ 0.57192017 0.69993118 0.48038541 0.75292498 0.95526497 0.70406056
+ 0.67859601 0.82037164 0.94838266 0.79421886 0.69029594 0.85203028
+ 0.84101858 0.53337922 0.62973159 0.69993118]
+Epoch 50/69
+----------
+train Loss: 0.1335 Attr Loss: 4.3220 Acc: 0.9902
+attribute accuracies
+[0.39492948 0.78503839 0.81567577 0.91794322 0.62138904 0.55979289
+ 0.52965542 0.68287806 0.41871094 0.77646849 0.98896626 0.72294233
+ 0.74500982 0.86423853 0.97539725 0.84888413 0.77443314 0.88041421
+ 0.88362792 0.52162114 0.67577218 0.74401   ]
+val Loss: 0.2181 Attr Loss: 4.6381 Acc: 0.9394
+attribute accuracies
+[0.44528562 0.76806607 0.79421886 0.88024776 0.6586373  0.56916724
+ 0.56847901 0.71782519 0.48107364 0.77288369 0.95526497 0.71025465
+ 0.68960771 0.81693049 0.94838266 0.7907777  0.69029594 0.84790089
+ 0.8348245  0.53819683 0.60633173 0.69442533]
+Epoch 51/69
+----------
+train Loss: 0.1325 Attr Loss: 4.3047 Acc: 0.9899
+attribute accuracies
+[0.39332262 0.78564542 0.81435458 0.91280129 0.61813962 0.56204249
+ 0.52558472 0.68791287 0.41799679 0.78128906 0.98893055 0.72701303
+ 0.74608106 0.86341725 0.97539725 0.84991966 0.7756115  0.87755758
+ 0.88519907 0.52454919 0.67612926 0.74425995]
+val Loss: 0.2240 Attr Loss: 4.6577 Acc: 0.9367
+attribute accuracies
+[0.44253269 0.75223675 0.79903648 0.86579491 0.62904336 0.559532
+ 0.5815554  0.67997247 0.47763248 0.77494838 0.95526497 0.71920165
+ 0.70061941 0.81211287 0.94907089 0.80729525 0.71851342 0.84927736
+ 0.84101858 0.55196146 0.61734343 0.70750172]
+Epoch 52/69
+----------
+train Loss: 0.1352 Attr Loss: 4.2964 Acc: 0.9900
+attribute accuracies
+[0.39610784 0.78368149 0.8153544  0.91073023 0.62688806 0.56089984
+ 0.53036958 0.68509195 0.42081771 0.7805749  0.98893055 0.7236922
+ 0.74725942 0.86391716 0.97539725 0.84881271 0.7742546  0.87759329
+ 0.87880736 0.52133548 0.67637922 0.74408141]
+val Loss: 0.2204 Attr Loss: 4.5925 Acc: 0.9394
+attribute accuracies
+[0.44322092 0.72814866 0.80729525 0.85547144 0.660702   0.57192017
+ 0.55264969 0.67859601 0.48107364 0.77838954 0.9559532  0.73709566
+ 0.68410186 0.80935994 0.94907089 0.79834825 0.71163111 0.84377151
+ 0.84377151 0.55540262 0.62147281 0.71782519]
+Epoch 53/69
+----------
+train Loss: 0.1350 Attr Loss: 4.2537 Acc: 0.9900
+attribute accuracies
+[0.39628638 0.78107481 0.81631851 0.91108731 0.6234601  0.55932869
+ 0.52701303 0.67816461 0.41978218 0.78078914 0.98896626 0.72783432
+ 0.74972326 0.86398857 0.97539725 0.84977683 0.77486163 0.8780932
+ 0.88387788 0.51747902 0.67934297 0.74597393]
+val Loss: 0.2222 Attr Loss: 4.5849 Acc: 0.9408
+attribute accuracies
+[0.44597385 0.74191328 0.80454233 0.86854783 0.64418445 0.56572608
+ 0.56779078 0.67653131 0.47969718 0.7818307  0.95526497 0.73847213
+ 0.68134893 0.80316586 0.94838266 0.78251893 0.67997247 0.85409498
+ 0.83207158 0.54645561 0.62422574 0.71644873]
+Epoch 54/69
+----------
+train Loss: 0.1312 Attr Loss: 4.2375 Acc: 0.9915
+attribute accuracies
+[0.39596501 0.78439564 0.81899661 0.91176576 0.62388859 0.56093555
+ 0.52915551 0.68069988 0.41988931 0.77971791 0.98893055 0.72626317
+ 0.74804499 0.86555972 0.97543296 0.84777718 0.7728977  0.87391537
+ 0.8826281  0.52465631 0.6776647  0.7435815 ]
+val Loss: 0.2266 Attr Loss: 4.5744 Acc: 0.9381
+attribute accuracies
+[0.44115623 0.74053682 0.8017894  0.87130076 0.64005506 0.56572608
+ 0.56228493 0.67377839 0.47487956 0.77013076 0.9559532  0.72539573
+ 0.67102546 0.8238128  0.94838266 0.8128011  0.70130764 0.8458362
+ 0.82312457 0.55127323 0.62078458 0.70061941]
+Epoch 55/69
+----------
+train Loss: 0.1359 Attr Loss: 4.2336 Acc: 0.9898
+attribute accuracies
+[0.3968577  0.78236029 0.81660418 0.90865917 0.62035351 0.55854312
+ 0.52722728 0.68627031 0.42110337 0.77821818 0.98893055 0.72590609
+ 0.7489734  0.86434565 0.97546867 0.85074094 0.77532583 0.87391537
+ 0.87848598 0.52497768 0.67905731 0.74593823]
+val Loss: 0.2237 Attr Loss: 4.5568 Acc: 0.9381
+attribute accuracies
+[0.44253269 0.75223675 0.80385409 0.85891259 0.63730213 0.58293187
+ 0.59944942 0.66139023 0.47625602 0.75017206 0.9559532  0.7026841
+ 0.6827254  0.81899518 0.94975912 0.80247763 0.68823125 0.84377151
+ 0.82450103 0.53682037 0.63799036 0.70681349]
+Epoch 56/69
+----------
+train Loss: 0.1333 Attr Loss: 4.1997 Acc: 0.9909
+attribute accuracies
+[0.39553651 0.78311016 0.81074808 0.90780218 0.62406713 0.56182824
+ 0.5304767  0.68294947 0.42113908 0.77511159 0.98893055 0.72604892
+ 0.74404571 0.86181039 0.97539725 0.84684878 0.77393323 0.87173719
+ 0.8803785  0.52122835 0.68023567 0.74276022]
+val Loss: 0.2227 Attr Loss: 4.5190 Acc: 0.9408
+attribute accuracies
+[0.44459738 0.75154852 0.80798348 0.87061253 0.66345492 0.56366139
+ 0.58637302 0.67240193 0.47832072 0.74604267 0.9559532  0.72126635
+ 0.69924295 0.81211287 0.94907089 0.81211287 0.6937371  0.8568479
+ 0.83207158 0.52787337 0.63110805 0.70543703]
+Epoch 57/69
+----------
+train Loss: 0.1360 Attr Loss: 4.2045 Acc: 0.9895
+attribute accuracies
+[0.39760757 0.7864667  0.81699696 0.90680236 0.62006785 0.55768613
+ 0.52740582 0.68248527 0.4221032  0.7692912  0.98896626 0.72372791
+ 0.74829495 0.86252455 0.97546867 0.8487413  0.77843242 0.8753794
+ 0.87837886 0.52508481 0.68119979 0.74215319]
+val Loss: 0.2235 Attr Loss: 4.5314 Acc: 0.9401
+attribute accuracies
+[0.44666208 0.76668961 0.78871301 0.86510668 0.64487268 0.56710255
+ 0.57123193 0.66620785 0.47900895 0.76256022 0.9559532  0.72057811
+ 0.6916724  0.80247763 0.94907089 0.79903648 0.68134893 0.85822436
+ 0.82725396 0.53406745 0.62904336 0.71507226]
+Epoch 58/69
+----------
+train Loss: 0.1325 Attr Loss: 4.1661 Acc: 0.9906
+attribute accuracies
+[0.39742903 0.7832887  0.81385467 0.90758793 0.62160329 0.5589359
+ 0.52994108 0.68380646 0.42178182 0.7778968  0.98896626 0.72701303
+ 0.75004463 0.86402428 0.97532583 0.84863417 0.7747188  0.87498661
+ 0.88019996 0.51958579 0.68234244 0.74540261]
+val Loss: 0.2272 Attr Loss: 4.5195 Acc: 0.9401
+attribute accuracies
+[0.44803854 0.7598073  0.79628355 0.85822436 0.65588438 0.5705437
+ 0.57467309 0.68823125 0.4845148  0.75292498 0.95526497 0.71988988
+ 0.68754301 0.82105988 0.94907089 0.8128011  0.71300757 0.8458362
+ 0.81417756 0.53475568 0.60701996 0.70061941]
+Epoch 59/69
+----------
+train Loss: 0.1288 Attr Loss: 4.1180 Acc: 0.9914
+attribute accuracies
+[0.39785753 0.78682378 0.81688984 0.90408856 0.62338868 0.5620782
+ 0.53283342 0.6853419  0.42353151 0.7738261  0.98893055 0.72565613
+ 0.74840207 0.86195322 0.97543296 0.85202642 0.77761114 0.87055883
+ 0.88041421 0.52179968 0.67987859 0.74497411]
+val Loss: 0.2224 Attr Loss: 4.4709 Acc: 0.9367
+attribute accuracies
+[0.44735031 0.74122505 0.79559532 0.86992429 0.64349621 0.57673778
+ 0.57123193 0.66620785 0.48520303 0.74191328 0.95526497 0.71851342
+ 0.67928424 0.82105988 0.94838266 0.78940124 0.68203716 0.84927736
+ 0.82243634 0.52993806 0.62835513 0.68203716]
+Epoch 60/69
+----------
+train Loss: 0.1273 Attr Loss: 4.0619 Acc: 0.9914
+attribute accuracies
+[0.39885735 0.78432423 0.8185324  0.90326727 0.61978218 0.55879307
+ 0.53369041 0.68212819 0.42381718 0.77068381 0.98893055 0.7200857
+ 0.74675951 0.86713087 0.97539725 0.84849134 0.77236208 0.87398679
+ 0.87916443 0.52040707 0.68212819 0.74343867]
+val Loss: 0.2279 Attr Loss: 4.4702 Acc: 0.9374
+attribute accuracies
+[0.44666208 0.75154852 0.80247763 0.85547144 0.62078458 0.57604955
+ 0.56779078 0.67928424 0.48038541 0.75498968 0.95526497 0.72401927
+ 0.68410186 0.81417756 0.94838266 0.79903648 0.70061941 0.86373021
+ 0.81899518 0.53888507 0.62697866 0.69717825]
+Epoch 61/69
+----------
+train Loss: 0.1249 Attr Loss: 4.0433 Acc: 0.9924
+attribute accuracies
+[0.39914301 0.78560971 0.81817533 0.90133905 0.61924656 0.56264953
+ 0.53540439 0.68412783 0.42410284 0.77186217 0.98896626 0.72340653
+ 0.75272273 0.86459561 0.97539725 0.84891984 0.77264774 0.87334405
+ 0.88202107 0.52012141 0.68230673 0.74418854]
+val Loss: 0.2197 Attr Loss: 4.4248 Acc: 0.9381
+attribute accuracies
+[0.45079147 0.7577426  0.79421886 0.85478321 0.64349621 0.58637302
+ 0.57123193 0.67928424 0.48520303 0.76462491 0.9559532  0.72195458
+ 0.67859601 0.81555403 0.95044735 0.80523056 0.70406056 0.84377151
+ 0.80591879 0.54989677 0.61734343 0.69924295]
+Epoch 62/69
+----------
+train Loss: 0.1238 Attr Loss: 4.0404 Acc: 0.9922
+attribute accuracies
+[0.39771469 0.78493126 0.8157829  0.90237458 0.62403142 0.56468488
+ 0.53436886 0.68602035 0.42449563 0.77014819 0.98893055 0.7223353
+ 0.75340118 0.86434565 0.97539725 0.84813426 0.77614712 0.87452241
+ 0.87920014 0.52179968 0.67962864 0.74179611]
+val Loss: 0.2253 Attr Loss: 4.4254 Acc: 0.9387
+attribute accuracies
+[0.44735031 0.73090158 0.80867171 0.8678596  0.63936683 0.56916724
+ 0.56847901 0.69580179 0.48313833 0.76256022 0.95526497 0.72952512
+ 0.67653131 0.82105988 0.95044735 0.8017894  0.69442533 0.85134205
+ 0.83344804 0.52580867 0.62629043 0.6916724 ]
+Epoch 63/69
+----------
+train Loss: 0.1224 Attr Loss: 4.0102 Acc: 0.9925
+attribute accuracies
+[0.39971434 0.78446706 0.81653276 0.90323157 0.6221032  0.5629709
+ 0.5345474  0.68594894 0.42324585 0.77189788 0.98893055 0.72540618
+ 0.75236565 0.86327442 0.97536154 0.84845563 0.77557579 0.87520086
+ 0.88098554 0.52033565 0.68459204 0.74254597]
+val Loss: 0.2230 Attr Loss: 4.4165 Acc: 0.9374
+attribute accuracies
+[0.44322092 0.75498968 0.79559532 0.85753613 0.6717137  0.5615967
+ 0.56366139 0.69786648 0.48038541 0.75086029 0.95526497 0.72333104
+ 0.70681349 0.81142464 0.94975912 0.80110117 0.69029594 0.85271851
+ 0.81417756 0.51961459 0.63179628 0.70956641]
+Epoch 64/69
+----------
+train Loss: 0.1256 Attr Loss: 4.0062 Acc: 0.9917
+attribute accuracies
+[0.3991073  0.78500268 0.81314051 0.90166042 0.62042492 0.5638993
+ 0.53683271 0.68866274 0.42313873 0.77096947 0.98893055 0.72272808
+ 0.75179432 0.86445278 0.97539725 0.84995537 0.77682557 0.87620068
+ 0.88059275 0.51912159 0.68191394 0.74329584]
+val Loss: 0.2255 Attr Loss: 4.4209 Acc: 0.9387
+attribute accuracies
+[0.44666208 0.75430145 0.79559532 0.86166552 0.65313145 0.5705437
+ 0.58430833 0.67309016 0.48107364 0.75843083 0.9559532  0.72401927
+ 0.70543703 0.80935994 0.94838266 0.78802478 0.6916724  0.82450103
+ 0.81968341 0.52236752 0.60770819 0.6916724 ]
+Epoch 65/69
+----------
+train Loss: 0.1211 Attr Loss: 4.0015 Acc: 0.9921
+attribute accuracies
+[0.39789323 0.78264596 0.81242635 0.90258882 0.62399572 0.56147117
+ 0.53394037 0.68430637 0.42353151 0.77393323 0.98893055 0.72569184
+ 0.75165149 0.86423853 0.97536154 0.84827709 0.77493305 0.87184431
+ 0.87791466 0.52151402 0.67959293 0.74600964]
+val Loss: 0.2188 Attr Loss: 4.4133 Acc: 0.9387
+attribute accuracies
+[0.44803854 0.7577426  0.79628355 0.85615967 0.65381968 0.56916724
+ 0.58843772 0.69511356 0.4845148  0.74741913 0.95664143 0.71231934
+ 0.69786648 0.81073641 0.94907089 0.79008947 0.6916724  0.84514797
+ 0.82174811 0.52580867 0.6145905  0.7026841 ]
+Epoch 66/69
+----------
+train Loss: 0.1223 Attr Loss: 3.9806 Acc: 0.9924
+attribute accuracies
+[0.39946438 0.78407427 0.81328334 0.90173183 0.62324585 0.56168541
+ 0.53458311 0.68791287 0.42406713 0.77257633 0.98893055 0.72329941
+ 0.75054455 0.86395287 0.97543296 0.85084806 0.7751473  0.87370112
+ 0.88009284 0.51740761 0.67870023 0.7435458 ]
+val Loss: 0.2166 Attr Loss: 4.4007 Acc: 0.9394
+attribute accuracies
+[0.45010323 0.74810736 0.80247763 0.8568479  0.65037853 0.5726084
+ 0.58430833 0.66483138 0.48589126 0.76531315 0.95526497 0.73021335
+ 0.67790778 0.81211287 0.94907089 0.80247763 0.69580179 0.86028906
+ 0.83000688 0.53888507 0.61596696 0.69855471]
+Epoch 67/69
+----------
+train Loss: 0.1222 Attr Loss: 3.9933 Acc: 0.9928
+attribute accuracies
+[0.39839314 0.7837529  0.81406892 0.9024817  0.62520978 0.56322085
+ 0.5359043  0.68462775 0.42428138 0.77150509 0.98893055 0.72533476
+ 0.75236565 0.8640957  0.97543296 0.84849134 0.77661132 0.87055883
+ 0.87777183 0.51851455 0.68194965 0.74251027]
+val Loss: 0.2248 Attr Loss: 4.4297 Acc: 0.9367
+attribute accuracies
+[0.44872677 0.75086029 0.79766001 0.85547144 0.64624914 0.56710255
+ 0.5815554  0.67859601 0.48382657 0.74948383 0.9559532  0.72401927
+ 0.68891948 0.82656573 0.94838266 0.80385409 0.7047488  0.84377151
+ 0.82518926 0.54301445 0.61734343 0.70681349]
+Epoch 68/69
+----------
+train Loss: 0.1210 Attr Loss: 3.9795 Acc: 0.9931
+attribute accuracies
+[0.39814319 0.78218175 0.80996251 0.90151759 0.62135333 0.56157829
+ 0.53369041 0.68498482 0.42431709 0.77079093 0.98893055 0.72715587
+ 0.74900911 0.85981075 0.97536154 0.84949116 0.77721835 0.87341546
+ 0.8799143  0.51930012 0.67934297 0.74336726]
+val Loss: 0.2212 Attr Loss: 4.3936 Acc: 0.9387
+attribute accuracies
+[0.45079147 0.74191328 0.79766001 0.85822436 0.65794907 0.57398486
+ 0.56916724 0.68203716 0.48382657 0.75567791 0.95664143 0.72746043
+ 0.69236063 0.81624226 0.94838266 0.80798348 0.69717825 0.84239504
+ 0.81830695 0.54094976 0.60908465 0.68960771]
+Epoch 69/69
+----------
+train Loss: 0.1255 Attr Loss: 3.9920 Acc: 0.9911
+attribute accuracies
+[0.39767899 0.78243171 0.81485449 0.90030352 0.62178182 0.56211391
+ 0.53472594 0.68609177 0.42478129 0.77296911 0.98893055 0.72797715
+ 0.75158007 0.86041778 0.97539725 0.84931262 0.77775397 0.87141582
+ 0.87812891 0.52058561 0.68102125 0.74076058]
+val Loss: 0.2240 Attr Loss: 4.3814 Acc: 0.9374
+attribute accuracies
+[0.449415   0.75498968 0.79353063 0.85822436 0.64349621 0.57398486
+ 0.58017894 0.669649   0.47900895 0.76049553 0.95526497 0.72195458
+ 0.68479009 0.81555403 0.94838266 0.80316586 0.69029594 0.83138334
+ 0.83000688 0.550585   0.6276669  0.71644873]
+Training complete in 160m 29s
